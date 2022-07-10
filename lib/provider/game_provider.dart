@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/enum.dart';
 
@@ -18,9 +19,12 @@ class GameController with ChangeNotifier {
   int _snakeLength = 0;
   List _snakeHead = [0, 0];
   List _snakeNeck = [0, 0];
+  List _snakeBody = [];
   late Offset _dragStart;
   late Offset _dragEnd;
-  List _snakeBody = [];
+
+  List<double> _gyroscopeValue = [0, 0, 0];
+  int _axisIndex = 0;
 
   /// Getter
   double get screenWidth => _screenWidth;
@@ -35,6 +39,8 @@ class GameController with ChangeNotifier {
   List get snakeBody => _snakeBody;
   Offset get dragStart => _dragStart;
   Offset get dragEnd => _dragEnd;
+  List<double> get gyroscopeValue => _gyroscopeValue;
+  int get axisIndex => _axisIndex;
 
   /// Setter
 
@@ -117,6 +123,26 @@ class GameController with ChangeNotifier {
     //     );
     //   },
     // );
+  }
+
+  void updateGyro(double x, double y, double z) {
+    _gyroscopeValue = [x, y, z];
+
+    List<double> _tempList = _gyroscopeValue;
+
+    for (var i = 0; i < _tempList.length; i++) {
+      _tempList[i] = _tempList[i].abs();
+    }
+
+    var _largestGyroAxis = _tempList.reduce(max);
+
+    var indexLarge = _tempList.indexWhere((element) => element == _largestGyroAxis);
+
+    _axisIndex = indexLarge;
+
+    print("AXIS DIRECTION : " + indexLarge.toString());
+
+    notifyListeners();
   }
 
   void updateMove() {

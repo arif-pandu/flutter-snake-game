@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/model/snake.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 class GamePlay extends StatefulWidget {
   const GamePlay({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class GamePlay extends StatefulWidget {
 class _GamePlayState extends State<GamePlay> {
   //
   late double boardSize;
+  late GyroscopeEvent _gyroscopeEvent;
 
   void getBoardSize() {
     var gameController = Provider.of<GameController>(context, listen: false);
@@ -25,10 +27,18 @@ class _GamePlayState extends State<GamePlay> {
     gameController.playGame();
   }
 
+  setGyroscope() {
+    gyroscopeEvents.listen((event) {
+      var gameController = Provider.of<GameController>(context, listen: false);
+      gameController.updateGyro(event.x, event.y, event.z);
+    });
+  }
+
   @override
   void initState() {
     getBoardSize();
     playGame();
+    setGyroscope();
     super.initState();
   }
 
@@ -70,6 +80,33 @@ class _GamePlayState extends State<GamePlay> {
                       ],
                     ),
                   ),
+                );
+              },
+            ),
+            Consumer<GameController>(
+              builder: (context, game, child) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text("X : " + game.gyroscopeValue[0].toStringAsFixed(2)),
+                        Text("Y : " + game.gyroscopeValue[1].toStringAsFixed(2)),
+                        Text("Z : " + game.gyroscopeValue[2].toStringAsFixed(2)),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      "AXIS DIRECTION : " +
+                          (game.axisIndex == 0
+                              ? "X"
+                              : game.axisIndex == 1
+                                  ? "Y"
+                                  : "Z"),
+                    ),
+                  ],
                 );
               },
             ),
