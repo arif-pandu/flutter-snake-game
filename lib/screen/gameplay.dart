@@ -99,13 +99,16 @@ class _GamePlayState extends State<GamePlay> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      "AXIS DIRECTION : " +
+                      "Axis Rotation : " +
+                          (game.isNegative ? "-" : "") +
                           (game.axisIndex == 0
                               ? "X"
                               : game.axisIndex == 1
                                   ? "Y"
                                   : "Z"),
                     ),
+                    const SizedBox(height: 20),
+                    Text("DIRECTION : " + (game.direction.name)),
                   ],
                 );
               },

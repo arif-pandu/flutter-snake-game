@@ -6,7 +6,7 @@ import 'package:flutter_snake_game/helper/enum.dart';
 class GameController with ChangeNotifier {
   /// Constant Var
   // final Direction _direction = Direction.values[Random().nextInt(Direction.values.length)];
-  final Direction _direction = Direction.right;
+  // final Direction _direction = Direction.right;
 
   /// Variable
   late Timer _timer;
@@ -22,8 +22,10 @@ class GameController with ChangeNotifier {
   List _snakeBody = [];
   late Offset _dragStart;
   late Offset _dragEnd;
-  List<double> _gyroscopeValue = [0, 0, 0];
-  int _axisIndex = 0;
+  List<double> gyroscopeValue = [0, 0, 0];
+  int axisIndex = 0;
+  bool isNegative = false;
+  Direction direction = Direction.idle;
 
   /// Getter
   double get screenWidth => _screenWidth;
@@ -38,8 +40,6 @@ class GameController with ChangeNotifier {
   List get snakeBody => _snakeBody;
   Offset get dragStart => _dragStart;
   Offset get dragEnd => _dragEnd;
-  List<double> get gyroscopeValue => _gyroscopeValue;
-  int get axisIndex => _axisIndex;
 
   /// Setter
 
@@ -92,14 +92,6 @@ class GameController with ChangeNotifier {
     notifyListeners();
   }
 
-  set gyroscopeValue(List<double> value) {
-    _gyroscopeValue = value;
-  }
-
-  set axisIndex(int value) {
-    _axisIndex = value;
-  }
-
   /// Void
   ///
 
@@ -118,7 +110,7 @@ class GameController with ChangeNotifier {
   }
 
   void playGame() {
-    print('====== GOTO $_direction ===========');
+    print('====== GOTO $direction ===========');
     // Future.delayed(
     //   Duration(seconds: 2),
     //   () {
@@ -142,52 +134,70 @@ class GameController with ChangeNotifier {
   }
 
   void updateData() {
-    // List<double> tempList = gyroscopeValue;
-
-    // for (var i = 0; i < tempList.length; i++) {
-    //   tempList[i] = tempList[i].abs();
-    // }
-
-    // var largestGyroAxis = tempList.reduce(max);
-
-    // var indexLarge = tempList.indexWhere(
-    //   (element) => element == largestGyroAxis,
-    // );
     List<double> tempList = [];
 
     var indexLarge = () {
       for (var i = 0; i < gyroscopeValue.length; i++) {
-        // tempList[i] = gyroscopeValue[i].abs();
-        tempList.add(gyroscopeValue[i]);
+        tempList.add(gyroscopeValue[i].abs());
       }
+      double largest = tempList.reduce(max);
+      return tempList.indexWhere((element) => element == largest);
     }();
 
-    // axisIndex = indexLarge;
+    axisIndex = indexLarge;
+    checkNegative();
 
-    // print("AXIS DIRECTION : " + indexLarge.toString());
+    print("Axis Index : " + indexLarge.toString());
     print(gyroscopeValue.toString());
+  }
+
+  void checkNegative() {
+    if (gyroscopeValue[axisIndex] < 0) {
+      isNegative = true;
+    } else {
+      isNegative = false;
+    }
+    checkDirection();
+  }
+
+  void checkDirection() {
+    if (axisIndex == 0) {
+      if (isNegative) {
+        direction = Direction.up;
+      } else {
+        direction = Direction.down;
+      }
+    } else if (axisIndex == 1) {
+      if (isNegative) {
+        direction = Direction.left;
+      } else {
+        direction = Direction.right;
+      }
+    } else {
+      print("Ngapain muter muter oi");
+    }
   }
 
   void updateMove() {
     /// [0] = Horizontal
     /// [1] = Vertical
-    if (_snakeHead[0] <= boardSize - _snakePartSize * 3 / 2 && //
-        _snakeHead[0] >= 0 - _snakePartSize * 3 / 2 && //
-        _snakeHead[1] <= boardSize - snakePartSize * 3 / 2 && //
-        _snakeHead[1] >= 0 - _snakePartSize * 3 / 2) {
-      if (_direction == Direction.down) {
-        _snakeHead[1] = _snakeHead[1] += 10;
-      } else if (_direction == Direction.up) {
-        _snakeHead[1] = _snakeHead[1] -= 10;
-      } else if (_direction == Direction.right) {
-        _snakeHead[0] = _snakeHead[0] += 10;
-      } else if (_direction == Direction.down) {
-        _snakeHead[0] = _snakeHead[0] -= 10;
-      }
-    } else {
-      _timer.cancel();
-      print("============ NABRAK ===========");
-    }
+    // if (_snakeHead[0] <= boardSize - _snakePartSize * 3 / 2 && //
+    //     _snakeHead[0] >= 0 - _snakePartSize * 3 / 2 && //
+    //     _snakeHead[1] <= boardSize - snakePartSize * 3 / 2 && //
+    //     _snakeHead[1] >= 0 - _snakePartSize * 3 / 2) {
+    //   if (_direction == Direction.down) {
+    //     _snakeHead[1] = _snakeHead[1] += 10;
+    //   } else if (_direction == Direction.up) {
+    //     _snakeHead[1] = _snakeHead[1] -= 10;
+    //   } else if (_direction == Direction.right) {
+    //     _snakeHead[0] = _snakeHead[0] += 10;
+    //   } else if (_direction == Direction.down) {
+    //     _snakeHead[0] = _snakeHead[0] -= 10;
+    //   }
+    // } else {
+    //   _timer.cancel();
+    //   print("============ NABRAK ===========");
+    // }
 
     notifyListeners();
   }
