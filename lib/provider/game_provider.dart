@@ -22,7 +22,6 @@ class GameController with ChangeNotifier {
   List _snakeBody = [];
   late Offset _dragStart;
   late Offset _dragEnd;
-
   List<double> _gyroscopeValue = [0, 0, 0];
   int _axisIndex = 0;
 
@@ -93,6 +92,14 @@ class GameController with ChangeNotifier {
     notifyListeners();
   }
 
+  set gyroscopeValue(List<double> value) {
+    _gyroscopeValue = value;
+  }
+
+  set axisIndex(int value) {
+    _axisIndex = value;
+  }
+
   /// Void
   ///
 
@@ -126,23 +133,39 @@ class GameController with ChangeNotifier {
   }
 
   void updateGyro(double x, double y, double z) {
-    _gyroscopeValue = [x, y, z];
+    gyroscopeValue = [x, y, z];
 
-    List<double> _tempList = _gyroscopeValue;
-
-    for (var i = 0; i < _tempList.length; i++) {
-      _tempList[i] = _tempList[i].abs();
-    }
-
-    var _largestGyroAxis = _tempList.reduce(max);
-
-    var indexLarge = _tempList.indexWhere((element) => element == _largestGyroAxis);
-
-    _axisIndex = indexLarge;
-
-    print("AXIS DIRECTION : " + indexLarge.toString());
+    updateData();
+    print(gyroscopeValue.toString());
 
     notifyListeners();
+  }
+
+  void updateData() {
+    // List<double> tempList = gyroscopeValue;
+
+    // for (var i = 0; i < tempList.length; i++) {
+    //   tempList[i] = tempList[i].abs();
+    // }
+
+    // var largestGyroAxis = tempList.reduce(max);
+
+    // var indexLarge = tempList.indexWhere(
+    //   (element) => element == largestGyroAxis,
+    // );
+    List<double> tempList = [];
+
+    var indexLarge = () {
+      for (var i = 0; i < gyroscopeValue.length; i++) {
+        // tempList[i] = gyroscopeValue[i].abs();
+        tempList.add(gyroscopeValue[i]);
+      }
+    }();
+
+    // axisIndex = indexLarge;
+
+    // print("AXIS DIRECTION : " + indexLarge.toString());
+    print(gyroscopeValue.toString());
   }
 
   void updateMove() {
