@@ -95,30 +95,31 @@ class GameController with ChangeNotifier {
     print("Offset : ${_boardSize / 2}, ${(_boardSize / 2) - _snakePartSize}");
   }
 
-  void playGame() {
-    print('====== GOTO $direction ===========');
-    Future.delayed(
-      Duration(seconds: 2),
-      () {
-        _timer = Timer.periodic(
-          const Duration(milliseconds: 100),
-          (timer) {
-            updateMove();
-          },
-        );
-      },
-    );
-  }
+  // void playGame() {
+  //   print('====== GOTO $direction ===========');
+  //   Future.delayed(
+  //     Duration(seconds: 2),
+  //     () {
+  //       _timer = Timer.periodic(
+  //         const Duration(milliseconds: 100),
+  //         (timer) {
+  //           updateMove();
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 
   void updateGyro(double x, double y, double z) {
     gyroscopeValue = [x, y, z];
 
     updateData();
-    print(gyroscopeValue.toString());
+    // print(gyroscopeValue.toString());
 
     notifyListeners();
   }
 
+  /// NEED TO ADD CHECKER IF LARGEST VALUE >= 0.5
   void updateData() {
     List<double> tempList = [];
 
@@ -127,7 +128,12 @@ class GameController with ChangeNotifier {
         tempList.add(gyroscopeValue[i].abs());
       }
       double largest = tempList.reduce(max);
-      return tempList.indexWhere((element) => element == largest);
+
+      if (largest >= 1.5) {
+        return tempList.indexWhere((element) => element == largest);
+      } else {
+        return axisIndex;
+      }
     }();
 
     axisIndex = indexLarge;
@@ -138,9 +144,9 @@ class GameController with ChangeNotifier {
   }
 
   void checkNegative() {
-    if (gyroscopeValue[axisIndex] < 0) {
+    if (gyroscopeValue[axisIndex] <= 1.0) {
       isNegative = true;
-    } else {
+    } else if (gyroscopeValue[axisIndex] >= 1.0) {
       isNegative = false;
     }
     checkDirection();
@@ -148,38 +154,48 @@ class GameController with ChangeNotifier {
 
   void checkDirection() {
     if (axisIndex == 0) {
-      if (isNegative) {
+      if (gyroscopeValue[0] <= -1.0) {
         direction = Direction.up;
-      } else {
+      } else if (gyroscopeValue[0] >= 1.0) {
         direction = Direction.down;
       }
+      // if (isNegative) {
+      //   direction = Direction.up;
+      // } else {
+      //   direction = Direction.down;
+      // }
     } else if (axisIndex == 1) {
-      if (isNegative) {
+      if (gyroscopeValue[1] <= -1.5) {
         direction = Direction.left;
-      } else {
+      } else if (gyroscopeValue[1] >= 1.5) {
         direction = Direction.right;
       }
+      // if (isNegative) {
+      //   direction = Direction.left;
+      // } else {
+      //   direction = Direction.right;
+      // }
     } else {
       print("Ngapain muter muter oi");
     }
   }
 
-  void updateMove() {
-    /// [0] = Horizontal
-    /// [1] = Vertical
+  // void updateMove() {
+  //   /// [0] = Horizontal
+  //   /// [1] = Vertical
 
-    if (direction == Direction.right) {
-      turnRight();
-    } else if (direction == Direction.left) {
-      turnLeft();
-    } else if (direction == Direction.up) {
-      turnUp();
-    } else if (direction == Direction.down) {
-      turnDown();
-    }
+  //   if (direction == Direction.right) {
+  //     turnRight();
+  //   } else if (direction == Direction.left) {
+  //     turnLeft();
+  //   } else if (direction == Direction.up) {
+  //     turnUp();
+  //   } else if (direction == Direction.down) {
+  //     turnDown();
+  //   }
 
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
 
   void addLength() {
     _snakeLength++;
@@ -195,10 +211,6 @@ class GameController with ChangeNotifier {
     } else if (direction == Direction.up) {
       snakeHead[1] = snakeHead[1] -= snakePartSize;
     }
-
-    // if(){
-
-    // }
   }
 
   void turnRight() {}

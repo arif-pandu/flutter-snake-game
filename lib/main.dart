@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: {
           "/": (context) => const HomePage(),
-          // "/": (context) => MyPainter(),
           "/play": (context) => const GamePlay(),
         },
       ),

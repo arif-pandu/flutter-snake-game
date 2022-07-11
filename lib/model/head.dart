@@ -61,11 +61,19 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
             sizeFactor: animation,
             axis: game.axisIndex != 0 ? Axis.horizontal : Axis.vertical, //DYNAMIC
             axisAlignment: () {
-              if (game.direction == Direction.up && game.direction == Direction.right) {
-                return 0.0;
-              } else {
-                return 1.0;
-              }
+              // if (game.direction == Direction.up || game.direction == Direction.right) {
+              //   return 0.0;
+              // } else {
+              //   return 1.0;
+              // }
+              // if (game.direction == Direction.left || game.direction == Direction.down) {
+              //   return 1.0;
+              // } else if (game.direction == Direction.up || game.direction == Direction.right) {
+              //   return -1.0;
+              // } else {
+              //   return 0.0;
+              // }
+              return 1.0;
             }(),
             child: Container(
               color: Colors.black,

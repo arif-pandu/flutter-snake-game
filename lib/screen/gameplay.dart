@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/model/head.dart';
+import 'package:flutter_snake_game/model/test_head.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -14,7 +15,7 @@ class GamePlay extends StatefulWidget {
 class _GamePlayState extends State<GamePlay> {
   //
   late double boardSize;
-  late GyroscopeEvent _gyroscopeEvent;
+  // late GyroscopeEvent _gyroscopeEvent;
 
   void getBoardSize() {
     var gameController = Provider.of<GameController>(context, listen: false);
@@ -22,22 +23,26 @@ class _GamePlayState extends State<GamePlay> {
     print(gameController.boardSize.toStringAsFixed(2));
   }
 
-  void playGame() {
-    var gameController = Provider.of<GameController>(context, listen: false);
-    gameController.playGame();
-  }
+  // void playGame() {
+  //   var gameController = Provider.of<GameController>(context, listen: false);
+  //   gameController.playGame();
+  // }
 
   setGyroscope() {
     gyroscopeEvents.listen((event) {
       var gameController = Provider.of<GameController>(context, listen: false);
       gameController.updateGyro(event.x, event.y, event.z);
     });
+    // accelerometerEvents.listen((event) {
+    //   var gameController = Provider.of<GameController>(context, listen: false);
+    //   gameController.updateGyro(event.x, event.y, event.z);
+    // });
   }
 
   @override
   void initState() {
     getBoardSize();
-    playGame();
+    // playGame();
     setGyroscope();
     super.initState();
   }
@@ -76,7 +81,8 @@ class _GamePlayState extends State<GamePlay> {
                     ),
                     child: Stack(
                       children: [
-                        SnakeHead(),
+                        // SnakeHead(),
+                        TestHead(),
                       ],
                     ),
                   ),
