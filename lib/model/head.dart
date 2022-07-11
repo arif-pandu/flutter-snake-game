@@ -57,29 +57,44 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
           duration: Duration(milliseconds: 0),
           left: game.snakeHead[0],
           top: game.snakeHead[1],
-          child: SizeTransition(
-            sizeFactor: animation,
-            axis: game.axisIndex != 0 ? Axis.horizontal : Axis.vertical, //DYNAMIC
-            axisAlignment: () {
-              // if (game.direction == Direction.up || game.direction == Direction.right) {
-              //   return 0.0;
-              // } else {
-              //   return 1.0;
-              // }
-              // if (game.direction == Direction.left || game.direction == Direction.down) {
-              //   return 1.0;
-              // } else if (game.direction == Direction.up || game.direction == Direction.right) {
-              //   return -1.0;
-              // } else {
-              //   return 0.0;
-              // }
-              return 1.0;
+          child: SizedBox(
+            height: game.snakePartSize,
+            width: game.snakePartSize,
+            child: () {
+              if (game.axisIndex == 0) {
+                return Row(
+                  mainAxisAlignment: game.isNegative ? MainAxisAlignment.end : MainAxisAlignment.start,
+                  children: [
+                    SizeTransition(
+                      sizeFactor: animation,
+                      axis: Axis.vertical,
+                      axisAlignment: 1,
+                      child: Container(
+                        color: Colors.black,
+                        height: game.snakePartSize,
+                        width: game.snakePartSize,
+                      ),
+                    ),
+                  ],
+                );
+              } else if (game.axisIndex == 1) {
+                return Column(
+                  mainAxisAlignment: game.isNegative ? MainAxisAlignment.end : MainAxisAlignment.start,
+                  children: [
+                    SizeTransition(
+                      sizeFactor: animation,
+                      axis: Axis.horizontal,
+                      axisAlignment: 1,
+                      child: Container(
+                        color: Colors.black,
+                        height: game.snakePartSize,
+                        width: game.snakePartSize,
+                      ),
+                    ),
+                  ],
+                );
+              }
             }(),
-            child: Container(
-              color: Colors.black,
-              height: game.snakePartSize,
-              width: game.snakePartSize,
-            ),
           ),
         );
       },

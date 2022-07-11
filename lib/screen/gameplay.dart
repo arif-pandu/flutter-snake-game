@@ -81,8 +81,8 @@ class _GamePlayState extends State<GamePlay> {
                     ),
                     child: Stack(
                       children: [
-                        // SnakeHead(),
-                        TestHead(),
+                        SnakeHead(),
+                        // TestHead(),
                       ],
                     ),
                   ),
