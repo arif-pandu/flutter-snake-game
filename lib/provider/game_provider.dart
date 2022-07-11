@@ -14,12 +14,10 @@ class GameController with ChangeNotifier {
   double _screenHeight = 0.0;
   double _boardSize = 0;
   double _snakePartSize = 0.0;
-  int _boxHorizCount = 20;
-  int _boxVertCount = 20;
   int _snakeLength = 0;
-  List _snakeHead = [0, 0];
-  List _snakeNeck = [0, 0];
-  List _snakeBody = [];
+  List<double> _snakeHead = [0, 0];
+  List<double> _snakeNeck = [0, 0];
+  List<double> _snakeBody = [];
   late Offset _dragStart;
   late Offset _dragEnd;
   List<double> gyroscopeValue = [0, 0, 0];
@@ -32,12 +30,10 @@ class GameController with ChangeNotifier {
   double get screenHeight => _screenHeight;
   double get boardSize => _boardSize;
   double get snakePartSize => _snakePartSize;
-  int get boxHorizCount => _boxHorizCount;
-  int get boxVertCount => _boxVertCount;
   int get snakeLength => _snakeLength;
-  List get snakeHead => _snakeHead;
-  List get snakeNeck => _snakeNeck;
-  List get snakeBody => _snakeBody;
+  List<double> get snakeHead => _snakeHead;
+  List<double> get snakeNeck => _snakeNeck;
+  List<double> get snakeBody => _snakeBody;
   Offset get dragStart => _dragStart;
   Offset get dragEnd => _dragEnd;
 
@@ -53,31 +49,21 @@ class GameController with ChangeNotifier {
     notifyListeners();
   }
 
-  set boxHorizCount(int value) {
-    _boxHorizCount = value;
-    notifyListeners();
-  }
-
-  set boxVertCount(int value) {
-    _boxVertCount = value;
-    notifyListeners();
-  }
-
   set snakeLength(int value) {
     _snakeLength = value;
   }
 
-  set snakeHead(List value) {
+  set snakeHead(List<double> value) {
     _snakeHead = value;
     notifyListeners();
   }
 
-  set snakeNeck(List value) {
+  set snakeNeck(List<double> value) {
     _snakeNeck = value;
     notifyListeners();
   }
 
-  set snakeBody(List value) {
+  set snakeBody(List<double> value) {
     _snakeBody = value;
     notifyListeners();
   }
@@ -111,17 +97,17 @@ class GameController with ChangeNotifier {
 
   void playGame() {
     print('====== GOTO $direction ===========');
-    // Future.delayed(
-    //   Duration(seconds: 2),
-    //   () {
-    //     _timer = Timer.periodic(
-    //       const Duration(milliseconds: 100),
-    //       (timer) {
-    //         updateMove();
-    //       },
-    //     );
-    //   },
-    // );
+    Future.delayed(
+      Duration(seconds: 2),
+      () {
+        _timer = Timer.periodic(
+          const Duration(milliseconds: 100),
+          (timer) {
+            updateMove();
+          },
+        );
+      },
+    );
   }
 
   void updateGyro(double x, double y, double z) {
@@ -181,29 +167,38 @@ class GameController with ChangeNotifier {
   void updateMove() {
     /// [0] = Horizontal
     /// [1] = Vertical
-    // if (_snakeHead[0] <= boardSize - _snakePartSize * 3 / 2 && //
-    //     _snakeHead[0] >= 0 - _snakePartSize * 3 / 2 && //
-    //     _snakeHead[1] <= boardSize - snakePartSize * 3 / 2 && //
-    //     _snakeHead[1] >= 0 - _snakePartSize * 3 / 2) {
-    //   if (_direction == Direction.down) {
-    //     _snakeHead[1] = _snakeHead[1] += 10;
-    //   } else if (_direction == Direction.up) {
-    //     _snakeHead[1] = _snakeHead[1] -= 10;
-    //   } else if (_direction == Direction.right) {
-    //     _snakeHead[0] = _snakeHead[0] += 10;
-    //   } else if (_direction == Direction.down) {
-    //     _snakeHead[0] = _snakeHead[0] -= 10;
-    //   }
-    // } else {
-    //   _timer.cancel();
-    //   print("============ NABRAK ===========");
-    // }
+
+    if (direction == Direction.right) {
+      turnRight();
+    } else if (direction == Direction.left) {
+      turnLeft();
+    } else if (direction == Direction.up) {
+      turnUp();
+    } else if (direction == Direction.down) {
+      turnDown();
+    }
 
     notifyListeners();
   }
 
   void addLength() {
     _snakeLength++;
+  }
+
+  void straightAhead() {
+    if (direction == Direction.right) {
+      snakeHead[0] = snakeHead[0] += snakePartSize;
+    } else if (direction == Direction.left) {
+      snakeHead[0] = snakeHead[0] -= snakePartSize;
+    } else if (direction == Direction.down) {
+      snakeHead[1] = snakeHead[1] += snakePartSize;
+    } else if (direction == Direction.up) {
+      snakeHead[1] = snakeHead[1] -= snakePartSize;
+    }
+
+    // if(){
+
+    // }
   }
 
   void turnRight() {}

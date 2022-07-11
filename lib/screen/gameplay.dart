@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_snake_game/model/snake.dart';
+import 'package:flutter_snake_game/model/head.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -76,7 +76,7 @@ class _GamePlayState extends State<GamePlay> {
                     ),
                     child: Stack(
                       children: [
-                        Snake(),
+                        SnakeHead(),
                       ],
                     ),
                   ),
