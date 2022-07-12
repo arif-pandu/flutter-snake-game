@@ -24,6 +24,8 @@ class GameController with ChangeNotifier {
   int axisIndex = 0;
   bool isNegative = false;
   Direction direction = Direction.idle;
+  Alignment _headAlign = Alignment.center;
+  Axis _headAxisAlign = Axis.horizontal;
 
   /// Getter
   double get screenWidth => _screenWidth;
@@ -36,6 +38,8 @@ class GameController with ChangeNotifier {
   List<double> get snakeBody => _snakeBody;
   Offset get dragStart => _dragStart;
   Offset get dragEnd => _dragEnd;
+  Alignment get headAlign => _headAlign;
+  Axis get headAxisAlign => _headAxisAlign;
 
   /// Setter
 
@@ -75,6 +79,16 @@ class GameController with ChangeNotifier {
 
   set dragEnd(Offset value) {
     _dragEnd = value;
+    notifyListeners();
+  }
+
+  set headAlign(Alignment value) {
+    _headAlign = value;
+    notifyListeners();
+  }
+
+  set headAxisAlign(Axis value) {
+    _headAxisAlign = value;
     notifyListeners();
   }
 
@@ -159,22 +173,12 @@ class GameController with ChangeNotifier {
       } else if (gyroscopeValue[0] >= 1.0) {
         direction = Direction.down;
       }
-      // if (isNegative) {
-      //   direction = Direction.up;
-      // } else {
-      //   direction = Direction.down;
-      // }
     } else if (axisIndex == 1) {
       if (gyroscopeValue[1] <= -1.5) {
         direction = Direction.left;
       } else if (gyroscopeValue[1] >= 1.5) {
         direction = Direction.right;
       }
-      // if (isNegative) {
-      //   direction = Direction.left;
-      // } else {
-      //   direction = Direction.right;
-      // }
     } else {
       print("Ngapain muter muter oi");
     }
@@ -204,12 +208,20 @@ class GameController with ChangeNotifier {
   void straightAhead() {
     if (direction == Direction.right) {
       snakeHead[0] = snakeHead[0] += snakePartSize;
+      headAlign = Alignment.centerLeft;
+      headAxisAlign = Axis.horizontal;
     } else if (direction == Direction.left) {
       snakeHead[0] = snakeHead[0] -= snakePartSize;
+      headAlign = Alignment.centerRight;
+      headAxisAlign = Axis.horizontal;
     } else if (direction == Direction.down) {
       snakeHead[1] = snakeHead[1] += snakePartSize;
+      headAlign = Alignment.topCenter;
+      headAxisAlign = Axis.vertical;
     } else if (direction == Direction.up) {
       snakeHead[1] = snakeHead[1] -= snakePartSize;
+      headAlign = Alignment.bottomCenter;
+      headAxisAlign = Axis.vertical;
     }
   }
 
