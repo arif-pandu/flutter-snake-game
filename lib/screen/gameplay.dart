@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/model/head.dart';
-import 'package:flutter_snake_game/model/test_head.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -23,20 +22,11 @@ class _GamePlayState extends State<GamePlay> {
     print(gameController.boardSize.toStringAsFixed(2));
   }
 
-  // void playGame() {
-  //   var gameController = Provider.of<GameController>(context, listen: false);
-  //   gameController.playGame();
-  // }
-
   setGyroscope() {
     gyroscopeEvents.listen((event) {
       var gameController = Provider.of<GameController>(context, listen: false);
       gameController.updateGyro(event.x, event.y, event.z);
     });
-    // accelerometerEvents.listen((event) {
-    //   var gameController = Provider.of<GameController>(context, listen: false);
-    //   gameController.updateGyro(event.x, event.y, event.z);
-    // });
   }
 
   @override
@@ -82,7 +72,6 @@ class _GamePlayState extends State<GamePlay> {
                     child: Stack(
                       children: [
                         SnakeHead(),
-                        // TestHead(),
                       ],
                     ),
                   ),

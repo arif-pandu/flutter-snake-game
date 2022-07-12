@@ -16,7 +16,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
   // MAKE NEW ANIMATION
   late final AnimationController animationController = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 2500),
+    duration: const Duration(milliseconds: 500),
     reverseDuration: Duration(seconds: 0),
   );
 
@@ -73,41 +73,6 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            // child: () {
-            //   if (game.axisIndex == 0) {
-            //     return Row(
-            //       mainAxisAlignment: MainAxisAlignment.start,
-            //       children: [
-            //         SizeTransition(
-            //           sizeFactor: animation,
-            //           axis: Axis.vertical,
-            //           axisAlignment: -1,
-            //           child: Container(
-            //             color: Colors.black,
-            //             height: game.snakePartSize,
-            //             width: game.snakePartSize,
-            //           ),
-            //         ),
-            //       ],
-            //     );
-            //   } else if (game.axisIndex == 1) {
-            //     return Column(
-            //       mainAxisAlignment: MainAxisAlignment.start,
-            //       children: [
-            //         SizeTransition(
-            //           sizeFactor: animation,
-            //           axis: Axis.horizontal,
-            //           axisAlignment: -1,
-            //           child: Container(
-            //             color: Colors.black,
-            //             height: game.snakePartSize,
-            //             width: game.snakePartSize,
-            //           ),
-            //         ),
-            //       ],
-            //     );
-            //   }
-            // }(),
           ),
         );
       },

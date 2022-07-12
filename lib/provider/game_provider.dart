@@ -24,6 +24,7 @@ class GameController with ChangeNotifier {
   int axisIndex = 0;
   bool isNegative = false;
   Direction direction = Direction.idle;
+  Direction lastDirection = Direction.idle;
   Alignment _headAlign = Alignment.center;
   Axis _headAxisAlign = Axis.horizontal;
 
@@ -109,31 +110,14 @@ class GameController with ChangeNotifier {
     print("Offset : ${_boardSize / 2}, ${(_boardSize / 2) - _snakePartSize}");
   }
 
-  // void playGame() {
-  //   print('====== GOTO $direction ===========');
-  //   Future.delayed(
-  //     Duration(seconds: 2),
-  //     () {
-  //       _timer = Timer.periodic(
-  //         const Duration(milliseconds: 100),
-  //         (timer) {
-  //           updateMove();
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
-
   void updateGyro(double x, double y, double z) {
     gyroscopeValue = [x, y, z];
 
     updateData();
-    // print(gyroscopeValue.toString());
 
     notifyListeners();
   }
 
-  /// NEED TO ADD CHECKER IF LARGEST VALUE >= 0.5
   void updateData() {
     List<double> tempList = [];
 
@@ -153,8 +137,8 @@ class GameController with ChangeNotifier {
     axisIndex = indexLarge;
     checkNegative();
 
-    print("Axis Index : " + indexLarge.toString());
-    print(gyroscopeValue.toString());
+    // print("Axis Index : " + indexLarge.toString());
+    // print(gyroscopeValue.toString());
   }
 
   void checkNegative() {
@@ -169,37 +153,31 @@ class GameController with ChangeNotifier {
   void checkDirection() {
     if (axisIndex == 0) {
       if (gyroscopeValue[0] <= -1.0) {
-        direction = Direction.up;
+        if (lastDirection != Direction.down) {
+          direction = Direction.up;
+        }
       } else if (gyroscopeValue[0] >= 1.0) {
-        direction = Direction.down;
+        if (lastDirection != Direction.up) {
+          direction = Direction.down;
+        }
       }
     } else if (axisIndex == 1) {
       if (gyroscopeValue[1] <= -1.5) {
-        direction = Direction.left;
+        if (lastDirection != Direction.right) {
+          direction = Direction.left;
+        }
       } else if (gyroscopeValue[1] >= 1.5) {
-        direction = Direction.right;
+        if (lastDirection != Direction.left) {
+          direction = Direction.right;
+        }
       }
     } else {
       print("Ngapain muter muter oi");
     }
+    notifyListeners();
+
+    print("Last Direction " + lastDirection.name.toString());
   }
-
-  // void updateMove() {
-  //   /// [0] = Horizontal
-  //   /// [1] = Vertical
-
-  //   if (direction == Direction.right) {
-  //     turnRight();
-  //   } else if (direction == Direction.left) {
-  //     turnLeft();
-  //   } else if (direction == Direction.up) {
-  //     turnUp();
-  //   } else if (direction == Direction.down) {
-  //     turnDown();
-  //   }
-
-  //   notifyListeners();
-  // }
 
   void addLength() {
     _snakeLength++;
@@ -210,18 +188,22 @@ class GameController with ChangeNotifier {
       snakeHead[0] = snakeHead[0] += snakePartSize;
       headAlign = Alignment.centerLeft;
       headAxisAlign = Axis.horizontal;
+      lastDirection = Direction.right;
     } else if (direction == Direction.left) {
       snakeHead[0] = snakeHead[0] -= snakePartSize;
       headAlign = Alignment.centerRight;
       headAxisAlign = Axis.horizontal;
+      lastDirection = Direction.left;
     } else if (direction == Direction.down) {
       snakeHead[1] = snakeHead[1] += snakePartSize;
       headAlign = Alignment.topCenter;
       headAxisAlign = Axis.vertical;
+      lastDirection = Direction.down;
     } else if (direction == Direction.up) {
       snakeHead[1] = snakeHead[1] -= snakePartSize;
       headAlign = Alignment.bottomCenter;
       headAxisAlign = Axis.vertical;
+      lastDirection = Direction.up;
     }
   }
 
