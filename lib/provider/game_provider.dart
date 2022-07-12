@@ -4,23 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/enum.dart';
 
 class GameController with ChangeNotifier {
-  /// Constant Var
-  // final Direction _direction = Direction.values[Random().nextInt(Direction.values.length)];
-  // final Direction _direction = Direction.right;
-
   /// Variable
-  late Timer _timer;
+
   double _screenWidth = 0.0;
   double _screenHeight = 0.0;
   double _boardSize = 0;
   double _snakePartSize = 0.0;
-  int _snakeLength = 0;
+  int snakeLength = 0;
+
+  List<double> _food = [-15, -15];
+
+  List<double> gyroscopeValue = [0, 0, 0];
   List<double> _snakeHead = [0, 0];
   List<double> _snakeNeck = [0, 0];
-  List<double> _snakeBody = [];
-  late Offset _dragStart;
-  late Offset _dragEnd;
-  List<double> gyroscopeValue = [0, 0, 0];
+  List<List<double>> _snakeBody = [];
+
   int axisIndex = 0;
   bool isNegative = false;
   Direction direction = Direction.idle;
@@ -33,12 +31,11 @@ class GameController with ChangeNotifier {
   double get screenHeight => _screenHeight;
   double get boardSize => _boardSize;
   double get snakePartSize => _snakePartSize;
-  int get snakeLength => _snakeLength;
+  List<double> get food => _food;
   List<double> get snakeHead => _snakeHead;
   List<double> get snakeNeck => _snakeNeck;
-  List<double> get snakeBody => _snakeBody;
-  Offset get dragStart => _dragStart;
-  Offset get dragEnd => _dragEnd;
+  List<List<double>> get snakeBody => _snakeBody;
+
   Alignment get headAlign => _headAlign;
   Axis get headAxisAlign => _headAxisAlign;
 
@@ -54,8 +51,9 @@ class GameController with ChangeNotifier {
     notifyListeners();
   }
 
-  set snakeLength(int value) {
-    _snakeLength = value;
+  set food(List<double> value) {
+    _food = value;
+    notifyListeners();
   }
 
   set snakeHead(List<double> value) {
@@ -68,18 +66,8 @@ class GameController with ChangeNotifier {
     notifyListeners();
   }
 
-  set snakeBody(List<double> value) {
+  set snakeBody(List<List<double>> value) {
     _snakeBody = value;
-    notifyListeners();
-  }
-
-  set dragStart(Offset value) {
-    _dragStart = value;
-    notifyListeners();
-  }
-
-  set dragEnd(Offset value) {
-    _dragEnd = value;
     notifyListeners();
   }
 
@@ -112,9 +100,7 @@ class GameController with ChangeNotifier {
 
   void updateGyro(double x, double y, double z) {
     gyroscopeValue = [x, y, z];
-
     updateData();
-
     notifyListeners();
   }
 
@@ -136,9 +122,6 @@ class GameController with ChangeNotifier {
 
     axisIndex = indexLarge;
     checkNegative();
-
-    // print("Axis Index : " + indexLarge.toString());
-    // print(gyroscopeValue.toString());
   }
 
   void checkNegative() {
@@ -179,10 +162,6 @@ class GameController with ChangeNotifier {
     print("Last Direction " + lastDirection.name.toString());
   }
 
-  void addLength() {
-    _snakeLength++;
-  }
-
   void straightAhead() {
     if (direction == Direction.right) {
       snakeHead[0] = snakeHead[0] += snakePartSize;
@@ -205,6 +184,21 @@ class GameController with ChangeNotifier {
       headAxisAlign = Axis.vertical;
       lastDirection = Direction.up;
     }
+  }
+
+  void spreadFood() {
+    Future.delayed(
+      Duration(seconds: 2),
+      () {
+        int random1 = Random().nextInt(20);
+        int random2 = Random().nextInt(20);
+
+        double tempFood1 = random1 * snakePartSize;
+        double tempFood2 = random2 * snakePartSize;
+
+        food = [tempFood1, tempFood2];
+      },
+    );
   }
 
   void turnRight() {}

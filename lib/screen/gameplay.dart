@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_snake_game/model/food.dart';
 import 'package:flutter_snake_game/model/head.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,6 @@ class GamePlay extends StatefulWidget {
 class _GamePlayState extends State<GamePlay> {
   //
   late double boardSize;
-  // late GyroscopeEvent _gyroscopeEvent;
 
   void getBoardSize() {
     var gameController = Provider.of<GameController>(context, listen: false);
@@ -22,18 +22,23 @@ class _GamePlayState extends State<GamePlay> {
     print(gameController.boardSize.toStringAsFixed(2));
   }
 
-  setGyroscope() {
+  void setGyroscope() {
     gyroscopeEvents.listen((event) {
       var gameController = Provider.of<GameController>(context, listen: false);
       gameController.updateGyro(event.x, event.y, event.z);
     });
   }
 
+  void setFood() {
+    var gameController = Provider.of<GameController>(context, listen: false);
+    gameController.spreadFood();
+  }
+
   @override
   void initState() {
     getBoardSize();
-    // playGame();
     setGyroscope();
+    setFood();
     super.initState();
   }
 
@@ -56,24 +61,17 @@ class _GamePlayState extends State<GamePlay> {
             ),
             Consumer<GameController>(
               builder: (context, game, child) {
-                return GestureDetector(
-                  onVerticalDragStart: (details) {
-                    game.dragStart = details.localPosition;
-                  },
-                  onVerticalDragUpdate: (details) {
-                    game.dragEnd = details.localPosition;
-                  },
-                  child: Container(
-                    width: boardSize,
-                    height: boardSize,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.black),
-                    ),
-                    child: Stack(
-                      children: [
-                        SnakeHead(),
-                      ],
-                    ),
+                return Container(
+                  width: boardSize,
+                  height: boardSize,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.black),
+                  ),
+                  child: Stack(
+                    children: [
+                      SnakeHead(),
+                      Food(),
+                    ],
                   ),
                 );
               },

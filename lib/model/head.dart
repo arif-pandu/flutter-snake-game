@@ -28,7 +28,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
   @override
   void initState() {
     Future.delayed(
-      Duration(seconds: 2),
+      Duration(seconds: 1),
       () {
         animationController.forward();
       },
