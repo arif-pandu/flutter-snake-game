@@ -12,12 +12,12 @@ class GameController with ChangeNotifier {
   double _snakePartSize = 0.0;
   int snakeLength = 0;
 
-  List<double> _food = [-15, -15];
+  List<double> food = [-15, -15];
 
   List<double> gyroscopeValue = [0, 0, 0];
   List<double> _snakeHead = [0, 0];
-  List<double> _snakeNeck = [0, 0];
   List<List<double>> _snakeBody = [];
+  List<double> _snakeTail = [];
 
   int axisIndex = 0;
   bool isNegative = false;
@@ -31,9 +31,9 @@ class GameController with ChangeNotifier {
   double get screenHeight => _screenHeight;
   double get boardSize => _boardSize;
   double get snakePartSize => _snakePartSize;
-  List<double> get food => _food;
+  // List<double> get food => _food;
   List<double> get snakeHead => _snakeHead;
-  List<double> get snakeNeck => _snakeNeck;
+  List<double> get snakeTail => _snakeTail;
   List<List<double>> get snakeBody => _snakeBody;
 
   Alignment get headAlign => _headAlign;
@@ -51,18 +51,18 @@ class GameController with ChangeNotifier {
     notifyListeners();
   }
 
-  set food(List<double> value) {
-    _food = value;
-    notifyListeners();
-  }
+  // set food(List<double> value) {
+  //   _food = value;
+  //   notifyListeners();
+  // }
 
   set snakeHead(List<double> value) {
     _snakeHead = value;
     notifyListeners();
   }
 
-  set snakeNeck(List<double> value) {
-    _snakeNeck = value;
+  set snakeTail(List<double> value) {
+    _snakeTail = value;
     notifyListeners();
   }
 
@@ -187,18 +187,54 @@ class GameController with ChangeNotifier {
   }
 
   void spreadFood() {
-    Future.delayed(
-      Duration(seconds: 2),
-      () {
-        int random1 = Random().nextInt(20);
-        int random2 = Random().nextInt(20);
+    /// Create random position(left and top)
+    /// And make sure it's not collapse with snake's head, body, and tail
+    List<double> xPart = [];
+    List<double> yPart = [];
 
-        double tempFood1 = random1 * snakePartSize;
-        double tempFood2 = random2 * snakePartSize;
+    xPart.add(snakeHead[0]);
+    yPart.add(snakeHead[1]);
 
-        food = [tempFood1, tempFood2];
-      },
-    );
+    xPart.add(snakeTail.isNotEmpty ? snakeTail[0] : -15);
+    yPart.add(snakeTail.isNotEmpty ? snakeTail[1] : -15);
+
+    for (var item in snakeBody) {
+      xPart.add(item.isNotEmpty ? snakeTail[0] : -15);
+      yPart.add(item.isNotEmpty ? snakeTail[0] : -15);
+    }
+    print("xPart : $xPart");
+    print("yPart : $yPart");
+    ///////////
+
+    int randomX = Random().nextInt(20);
+    int randomY = Random().nextInt(20);
+
+    double tempFoodX = randomX * snakePartSize;
+    double tempFoodY = randomY * snakePartSize;
+
+    if ((!xPart.contains(tempFoodX)) && (!yPart.contains(tempFoodY))) {
+      food = [tempFoodX, tempFoodY];
+    } else {
+      createRandomFood(xPart, yPart);
+    }
+  }
+
+  void createRandomFood(var xPart, var yPart) {
+    int randomX = Random().nextInt(20);
+    int randomY = Random().nextInt(20);
+
+    double tempFoodX = randomX * snakePartSize;
+    double tempFoodY = randomY * snakePartSize;
+    if ((!xPart.contains(tempFoodX)) && (!yPart.contains(tempFoodY))) {
+      food = [tempFoodX, tempFoodY];
+      notifyListeners();
+      print("============ FOOD : $food ==============");
+    } else {
+      randomX = Random().nextInt(20);
+      randomY = Random().nextInt(20);
+      createRandomFood(xPart, yPart);
+    }
+    print("X : " + randomX.toString() + " " + "Y: " + randomY.toString());
   }
 
   void turnRight() {}

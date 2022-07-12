@@ -12,6 +12,8 @@ class Food extends StatelessWidget {
         return Positioned(
           left: game.food[0],
           top: game.food[1],
+          // left: 0,
+          // right: 0,
           child: Container(
             height: game.snakePartSize * 0.8,
             width: game.snakePartSize * 0.8,

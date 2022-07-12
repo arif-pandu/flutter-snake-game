@@ -19,7 +19,7 @@ class _GamePlayState extends State<GamePlay> {
   void getBoardSize() {
     var gameController = Provider.of<GameController>(context, listen: false);
     boardSize = gameController.boardSize;
-    print(gameController.boardSize.toStringAsFixed(2));
+    // print("Board Size : " + gameController.boardSize.toStringAsFixed(2));
   }
 
   void setGyroscope() {
