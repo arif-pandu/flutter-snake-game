@@ -13,13 +13,14 @@ class GameController with ChangeNotifier {
   double _snakePartSize = 0.0;
   int snakeLength = 0;
 
+  List<double> _gyroscopeValue = [0, 0, 0];
+
   List<double> food = [-15, -15];
 
-  List<double> _gyroscopeValue = [0, 0, 0];
   List<double> _snakeHead = [0, 0];
   List<double> _snakeNeck = [-40, -40];
-  List<List<double>> _snakeBody = [];
   List<double> _snakeTail = [];
+  List<List<double>> _snakeBody = [];
 
   List<SnakeBody> _bodyMember = [];
 
@@ -228,8 +229,6 @@ class GameController with ChangeNotifier {
   void spreadFood() {
     /// Create random position(left and top)
     /// And make sure it's not collapse with snake's head, body, and tail
-    // List<double> xPart = [];
-    // List<double> yPart = [];
     xPart = [];
     yPart = [];
 
@@ -240,8 +239,8 @@ class GameController with ChangeNotifier {
     yPart.add(snakeTail.isNotEmpty ? snakeTail[1] : -15);
 
     for (var item in snakeBody) {
-      xPart.add(item.isNotEmpty ? snakeTail[0] : -15);
-      yPart.add(item.isNotEmpty ? snakeTail[0] : -15);
+      xPart.add(item.isNotEmpty ? item[0] : -15);
+      yPart.add(item.isNotEmpty ? item[1] : -15);
     }
     print("xPart : $xPart");
     print("yPart : $yPart");
@@ -255,7 +254,7 @@ class GameController with ChangeNotifier {
 
     if ((!xPart.contains(tempFoodX)) && (!yPart.contains(tempFoodY))) {
       food = [tempFoodX, tempFoodY];
-      print("Food : $food");
+      print("=== Food : $food ===");
     } else {
       createRandomFood(xPart, yPart);
     }
@@ -279,7 +278,43 @@ class GameController with ChangeNotifier {
   }
 
   void addBody() {
-    bodyMember.add(SnakeBody());
+    setBodyPosition();
+    bodyMember.add(SnakeBody(index: snakeLength));
+    snakeLength++;
+  }
+
+  // Salahnya di setBodyPosition()
+
+  void setBodyPosition() {
+    // Ada 2 patokan buat ngikut depannya,
+    //  Ikut neck / index-1
+    List<double> tempList = [];
+
+    if (snakeLength == 0) {
+      /// First Body Appear, follow neck
+      if (direction == Direction.right) {
+        tempList = [snakeNeck[0] - snakePartSize, snakeNeck[1]];
+        snakeBody.add(tempList);
+      } else if (direction == Direction.left) {
+        tempList = [snakeNeck[0] + snakePartSize, snakeNeck[1]];
+        snakeBody.add(tempList);
+      } else if (direction == Direction.down) {
+        tempList = [snakeNeck[0], snakeNeck[1] + snakePartSize];
+        snakeBody.add(tempList);
+      } else if (direction == Direction.up) {
+        tempList = [snakeNeck[0], snakeNeck[1] - snakePartSize];
+        snakeBody.add(tempList);
+      }
+
+      print("===== HARUSNYA NAMBAH PANJANG ======");
+
+      //
+    } else {
+      /// Second Body and so on Appear, follow index before
+      print("===== INI JUGA HARUSNYA NAMBAH PANJANG ======");
+    }
+
+    bodyMember.add(SnakeBody(index: snakeLength));
   }
 
   void turnRight() {}

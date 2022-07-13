@@ -19,11 +19,12 @@ class _FoodState extends State<Food> {
 
   @override
   void didChangeDependencies() {
-    game!.addListener(() {
-      if ((game!.food[0] == game!.snakeHead[0]) && (game!.food[1] == game!.snakeHead[1])) {
-        print("= MAKAN! =");
-      }
-    });
+    // game!.addListener(() {
+    //   if ((game!.food[0] == game!.snakeHead[0]) && (game!.food[1] == game!.snakeHead[1])) {
+    //     print("= MAKAN! =");
+    //     game!.spreadFood();
+    //   }
+    // });
     super.didChangeDependencies();
   }
 

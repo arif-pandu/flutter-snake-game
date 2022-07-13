@@ -52,6 +52,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
       animationController.forward();
       print("====== MAKAN ! =======");
       game.addBody();
+      game.spreadFood();
     }
     if ((bodyAndTailX().contains(game.snakeHead[0])) && (bodyAndTailY().contains(game.snakeHead[1]))) {
       /// If Head Collide with body or tail
