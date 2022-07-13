@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/enum.dart';
+import 'package:flutter_snake_game/model/body.dart';
 
 class GameController with ChangeNotifier {
   /// Variable
@@ -16,8 +17,11 @@ class GameController with ChangeNotifier {
 
   List<double> _gyroscopeValue = [0, 0, 0];
   List<double> _snakeHead = [0, 0];
+  List<double> _snakeNeck = [-15, -15];
   List<List<double>> _snakeBody = [];
   List<double> _snakeTail = [];
+
+  List<SnakeBody> _bodyMember = [];
 
   List<double> xPart = [];
   List<double> yPart = [];
@@ -35,9 +39,13 @@ class GameController with ChangeNotifier {
   double get screenHeight => _screenHeight;
   double get boardSize => _boardSize;
   double get snakePartSize => _snakePartSize;
+
   List<double> get snakeHead => _snakeHead;
+  List<double> get snakeNeck => _snakeNeck;
   List<double> get snakeTail => _snakeTail;
   List<List<double>> get snakeBody => _snakeBody;
+
+  List<SnakeBody> get bodyMember => _bodyMember;
 
   Alignment get headAlign => _headAlign;
   Axis get headAxisAlign => _headAxisAlign;
@@ -64,6 +72,11 @@ class GameController with ChangeNotifier {
     notifyListeners();
   }
 
+  set snakeNeck(List<double> value) {
+    _snakeNeck = value;
+    notifyListeners();
+  }
+
   set snakeTail(List<double> value) {
     _snakeTail = value;
     notifyListeners();
@@ -71,6 +84,11 @@ class GameController with ChangeNotifier {
 
   set snakeBody(List<List<double>> value) {
     _snakeBody = value;
+    notifyListeners();
+  }
+
+  set bodyMember(List<SnakeBody> value) {
+    _bodyMember = value;
     notifyListeners();
   }
 
@@ -168,25 +186,43 @@ class GameController with ChangeNotifier {
   void straightAhead() {
     if (direction == Direction.right) {
       snakeHead[0] = snakeHead[0] += snakePartSize;
+      neckFollowHead(0, false, 1);
       headAlign = Alignment.centerLeft;
       headAxisAlign = Axis.horizontal;
       lastDirection = Direction.right;
     } else if (direction == Direction.left) {
       snakeHead[0] = snakeHead[0] -= snakePartSize;
+      neckFollowHead(0, true, 1);
       headAlign = Alignment.centerRight;
       headAxisAlign = Axis.horizontal;
       lastDirection = Direction.left;
     } else if (direction == Direction.down) {
       snakeHead[1] = snakeHead[1] += snakePartSize;
+      neckFollowHead(1, false, 0);
       headAlign = Alignment.topCenter;
       headAxisAlign = Axis.vertical;
       lastDirection = Direction.down;
     } else if (direction == Direction.up) {
       snakeHead[1] = snakeHead[1] -= snakePartSize;
+      neckFollowHead(1, true, 0);
       headAlign = Alignment.bottomCenter;
       headAxisAlign = Axis.vertical;
       lastDirection = Direction.up;
     }
+  }
+
+  void neckFollowHead(int index, bool isNegative, int anotherIndex) {
+    var temp = [];
+    temp.add(snakeHead[index]);
+    temp.add(snakeHead[anotherIndex]);
+    if (isNegative) {
+      snakeNeck[index] = temp[0] + snakePartSize;
+      snakeNeck[anotherIndex] = temp[1];
+    } else {
+      snakeNeck[index] = temp[0] - snakePartSize;
+      snakeNeck[anotherIndex] = temp[1];
+    }
+    // snakeNeck[index] = temp[0] -= snakePartSize;
   }
 
   void spreadFood() {
@@ -240,6 +276,10 @@ class GameController with ChangeNotifier {
       createRandomFood(xPart, yPart);
     }
     print("X : " + randomX.toString() + " " + "Y: " + randomY.toString());
+  }
+
+  void addBody() {
+    bodyMember.add(SnakeBody());
   }
 
   void turnRight() {}
