@@ -17,7 +17,7 @@ class GameController with ChangeNotifier {
 
   List<double> _gyroscopeValue = [0, 0, 0];
   List<double> _snakeHead = [0, 0];
-  List<double> _snakeNeck = [-15, -15];
+  List<double> _snakeNeck = [-40, -40];
   List<List<double>> _snakeBody = [];
   List<double> _snakeTail = [];
 
