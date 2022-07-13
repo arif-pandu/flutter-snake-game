@@ -14,12 +14,18 @@ class Food extends StatelessWidget {
           top: game.food[1],
           // left: 0,
           // right: 0,
-          child: Container(
-            height: game.snakePartSize * 0.8,
-            width: game.snakePartSize * 0.8,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
-              color: Colors.red[700],
+          child: SizedBox(
+            height: game.snakePartSize,
+            width: game.snakePartSize,
+            child: Center(
+              child: Container(
+                height: game.snakePartSize * 0.8,
+                width: game.snakePartSize * 0.8,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.red[700],
+                ),
+              ),
             ),
           ),
         );

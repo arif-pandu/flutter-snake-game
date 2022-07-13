@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_snake_game/helper/enum.dart';
 import 'package:flutter_snake_game/model/food.dart';
 import 'package:flutter_snake_game/model/head.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
@@ -102,6 +103,36 @@ class _GamePlayState extends State<GamePlay> {
                     ),
                     const SizedBox(height: 20),
                     Text("DIRECTION : " + (game.direction.name)),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            game.direction = Direction.up;
+                          },
+                          child: Text("Up"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            game.direction = Direction.down;
+                          },
+                          child: Text("Down"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            game.direction = Direction.right;
+                          },
+                          child: Text("Right"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            game.direction = Direction.left;
+                          },
+                          child: Text("Left"),
+                        ),
+                      ],
+                    ),
                   ],
                 );
               },

@@ -14,10 +14,13 @@ class GameController with ChangeNotifier {
 
   List<double> food = [-15, -15];
 
-  List<double> gyroscopeValue = [0, 0, 0];
+  List<double> _gyroscopeValue = [0, 0, 0];
   List<double> _snakeHead = [0, 0];
   List<List<double>> _snakeBody = [];
   List<double> _snakeTail = [];
+
+  List<double> xPart = [];
+  List<double> yPart = [];
 
   int axisIndex = 0;
   bool isNegative = false;
@@ -27,11 +30,11 @@ class GameController with ChangeNotifier {
   Axis _headAxisAlign = Axis.horizontal;
 
   /// Getter
+  List<double> get gyroscopeValue => _gyroscopeValue;
   double get screenWidth => _screenWidth;
   double get screenHeight => _screenHeight;
   double get boardSize => _boardSize;
   double get snakePartSize => _snakePartSize;
-  // List<double> get food => _food;
   List<double> get snakeHead => _snakeHead;
   List<double> get snakeTail => _snakeTail;
   List<List<double>> get snakeBody => _snakeBody;
@@ -40,6 +43,11 @@ class GameController with ChangeNotifier {
   Axis get headAxisAlign => _headAxisAlign;
 
   /// Setter
+  ///
+  set gyroscopeValue(List<double> value) {
+    _gyroscopeValue = value;
+    notifyListeners();
+  }
 
   set boardSize(double value) {
     _boardSize = value;
@@ -50,11 +58,6 @@ class GameController with ChangeNotifier {
     _snakePartSize = value;
     notifyListeners();
   }
-
-  // set food(List<double> value) {
-  //   _food = value;
-  //   notifyListeners();
-  // }
 
   set snakeHead(List<double> value) {
     _snakeHead = value;
@@ -159,7 +162,7 @@ class GameController with ChangeNotifier {
     }
     notifyListeners();
 
-    print("Last Direction " + lastDirection.name.toString());
+    // print("Last Direction " + lastDirection.name.toString());
   }
 
   void straightAhead() {
@@ -189,8 +192,10 @@ class GameController with ChangeNotifier {
   void spreadFood() {
     /// Create random position(left and top)
     /// And make sure it's not collapse with snake's head, body, and tail
-    List<double> xPart = [];
-    List<double> yPart = [];
+    // List<double> xPart = [];
+    // List<double> yPart = [];
+    xPart = [];
+    yPart = [];
 
     xPart.add(snakeHead[0]);
     yPart.add(snakeHead[1]);
@@ -214,6 +219,7 @@ class GameController with ChangeNotifier {
 
     if ((!xPart.contains(tempFoodX)) && (!yPart.contains(tempFoodY))) {
       food = [tempFoodX, tempFoodY];
+      print("Food : $food");
     } else {
       createRandomFood(xPart, yPart);
     }
@@ -227,7 +233,6 @@ class GameController with ChangeNotifier {
     double tempFoodY = randomY * snakePartSize;
     if ((!xPart.contains(tempFoodX)) && (!yPart.contains(tempFoodY))) {
       food = [tempFoodX, tempFoodY];
-      notifyListeners();
       print("============ FOOD : $food ==============");
     } else {
       randomX = Random().nextInt(20);

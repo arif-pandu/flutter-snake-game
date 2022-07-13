@@ -25,6 +25,73 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
     curve: Curves.linear,
   );
 
+  void checkCollision() {
+    /// Check 2 type collision
+    /// Collide with food
+    /// Collide with Body/Tail
+    ///
+    var game = Provider.of<GameController>(context, listen: false);
+
+    List<double> bodyAndTailX() {
+      List<double> _temp = [];
+      for (var item in game.xPart) {
+        _temp.add(item);
+      }
+      _temp.removeWhere((element) => element == game.snakeHead[0]);
+      return _temp;
+    }
+
+    List<double> bodyAndTailY() {
+      List<double> _temp = [];
+      for (var item in game.yPart) {
+        _temp.add(item);
+      }
+      _temp.removeWhere((element) => element == game.snakeHead[1]);
+      return _temp;
+    }
+
+    // print("==== Check Collision ====");
+
+    if ((game.snakeHead[0] == game.food[0]) && (game.snakeHead[1] == game.food[1])) {
+      animationController.forward();
+      print("====== MAKAN ! =======");
+      popUp("Makan");
+    } else {
+      animationController.forward();
+      print("=== Lurus terus ===");
+    }
+
+    // if ((game.xPart.contains(game.food[0]) && (game.yPart.contains(game.food[1])))) {
+    //   // If Snake Collide With Food
+    //   animationController.forward();
+    //   print("=== Nabrak Food ===");
+    //   popUp("NABRAK BADAN");
+    // } else if ((bodyAndTailX().contains(game.snakeHead[0])) && (bodyAndTailY().contains(game.snakeHead[1]))) {
+    //   // If Snake Head Collide With Body/Tail
+    //   animationController.forward;
+    //   print("=== Nabrak badan/ekor ===");
+    //   popUp("NABRAK BADAN");
+    // } else {
+    //   print("=== Lurus terus ===");
+    //   animationController.forward();
+    // }
+  }
+
+  popUp(String status) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(status),
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   void initState() {
     Future.delayed(
@@ -38,13 +105,16 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
 
   @override
   void didChangeDependencies() {
-    animationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        var game = Provider.of<GameController>(context, listen: false);
-        game.straightAhead();
-        animationController.reverse().then((value) => animationController.forward());
-      }
-    });
+    animationController.addStatusListener(
+      (status) {
+        if (status == AnimationStatus.completed) {
+          var game = Provider.of<GameController>(context, listen: false);
+          game.straightAhead();
+
+          animationController.reverse().then((value) => checkCollision());
+        }
+      },
+    );
 
     super.didChangeDependencies();
   }
