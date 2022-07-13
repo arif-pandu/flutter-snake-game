@@ -26,10 +26,6 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
   );
 
   void checkCollision() {
-    /// Check 2 type collision
-    /// Collide with food
-    /// Collide with Body/Tail
-    ///
     var game = Provider.of<GameController>(context, listen: false);
 
     List<double> bodyAndTailX() {
@@ -50,32 +46,20 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
       return _temp;
     }
 
-    // print("==== Check Collision ====");
+    /// ==== Check Collision ====
 
     if ((game.snakeHead[0] == game.food[0]) && (game.snakeHead[1] == game.food[1])) {
       animationController.forward();
       print("====== MAKAN ! =======");
       game.addBody();
+    }
+    if ((bodyAndTailX().contains(game.snakeHead[0])) && (bodyAndTailY().contains(game.snakeHead[1]))) {
+      /// If Head Collide with body or tail
     } else {
       animationController.forward();
-      print("=== Lurus terus ===");
+      // Lurus Terus Pantang Mundur
     }
   }
-
-  // popUp(String status) {
-  //   showDialog(
-  //       context: context,
-  //       builder: (context) {
-  //         return Dialog(
-  //           child: Center(
-  //             child: Padding(
-  //               padding: const EdgeInsets.all(8.0),
-  //               child: Text(status),
-  //             ),
-  //           ),
-  //         );
-  //       });
-  // }
 
   @override
   void initState() {

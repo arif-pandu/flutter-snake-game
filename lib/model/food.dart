@@ -2,8 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
 
-class Food extends StatelessWidget {
+class Food extends StatefulWidget {
   const Food({Key? key}) : super(key: key);
+
+  @override
+  State<Food> createState() => _FoodState();
+}
+
+class _FoodState extends State<Food> {
+  GameController? game;
+  @override
+  void initState() {
+    game = Provider.of<GameController>(context, listen: false);
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    game!.addListener(() {
+      if ((game!.food[0] == game!.snakeHead[0]) && (game!.food[1] == game!.snakeHead[1])) {
+        print("= MAKAN! =");
+      }
+    });
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +34,6 @@ class Food extends StatelessWidget {
         return Positioned(
           left: game.food[0],
           top: game.food[1],
-          // left: 0,
-          // right: 0,
           child: SizedBox(
             height: game.snakePartSize,
             width: game.snakePartSize,
