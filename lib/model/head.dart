@@ -26,7 +26,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
   );
 
   void checkCollision() {
-    var game = Provider.of<GameController>(context, listen: false);
+    var game = Provider.of<GameProvider>(context, listen: false);
 
     List<double> bodyAndTailX() {
       List<double> _temp = [];
@@ -78,7 +78,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
     animationController.addStatusListener(
       (status) {
         if (status == AnimationStatus.completed) {
-          var game = Provider.of<GameController>(context, listen: false);
+          var game = Provider.of<GameProvider>(context, listen: false);
           game.straightAhead();
 
           animationController.reverse().then((value) => checkCollision());
@@ -91,7 +91,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GameController>(
+    return Consumer<GameProvider>(
       builder: (context, game, child) {
         return AnimatedPositioned(
           duration: Duration(milliseconds: 0),

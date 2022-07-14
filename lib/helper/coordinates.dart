@@ -3,7 +3,7 @@
 // import 'package:provider/provider.dart';
 
 // class Coordinate {
-//   final GameController gameController;
+//   final gameProvider gameProvider;
 
 //   // BIKIN LIST COORDINATES BIAR GAMPANG
 

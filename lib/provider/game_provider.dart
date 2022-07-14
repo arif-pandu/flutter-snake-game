@@ -5,11 +5,9 @@ import 'package:flutter_snake_game/helper/enum.dart';
 import 'package:flutter_snake_game/model/body.dart';
 import 'package:flutter_snake_game/provider/coordinate_provider.dart';
 
-class GameController with ChangeNotifier {
-  late AreaCoordinate areaCoordinate;
-
+class GameProvider with ChangeNotifier {
+  //
   /// Variable
-
   double _screenWidth = 0.0;
   double _screenHeight = 0.0;
   double _boardSize = 0;

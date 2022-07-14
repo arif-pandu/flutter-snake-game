@@ -7,7 +7,7 @@ class SnakeNeck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GameController>(
+    return Consumer<GameProvider>(
       builder: (context, game, child) {
         return Positioned(
           left: game.snakeNeck[0],

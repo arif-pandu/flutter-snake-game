@@ -21,21 +21,21 @@ class _GamePlayState extends State<GamePlay> {
   late double boardSize;
 
   void getBoardSize() {
-    var gameController = Provider.of<GameController>(context, listen: false);
-    boardSize = gameController.boardSize;
-    // print("Board Size : " + gameController.boardSize.toStringAsFixed(2));
+    var gameProvider = Provider.of<GameProvider>(context, listen: false);
+    boardSize = gameProvider.boardSize;
+    // print("Board Size : " + gameProvider.boardSize.toStringAsFixed(2));
   }
 
   void setGyroscope() {
     gyroscopeEvents.listen((event) {
-      var gameController = Provider.of<GameController>(context, listen: false);
-      gameController.updateGyro(event.x, event.y, event.z);
+      var gameProvider = Provider.of<GameProvider>(context, listen: false);
+      gameProvider.updateGyro(event.x, event.y, event.z);
     });
   }
 
   void setFood() {
-    var gameController = Provider.of<GameController>(context, listen: false);
-    gameController.spreadFood();
+    var gameProvider = Provider.of<GameProvider>(context, listen: false);
+    gameProvider.spreadFood();
   }
 
   @override
@@ -63,7 +63,7 @@ class _GamePlayState extends State<GamePlay> {
                 ],
               ),
             ),
-            Consumer<GameController>(
+            Consumer<GameProvider>(
               builder: (context, game, child) {
                 return Container(
                   width: boardSize,
@@ -83,7 +83,7 @@ class _GamePlayState extends State<GamePlay> {
                 );
               },
             ),
-            Consumer<GameController>(
+            Consumer<GameProvider>(
               builder: (context, game, _) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -137,16 +137,16 @@ class _GamePlayState extends State<GamePlay> {
                           },
                           child: Text("Left"),
                         ),
-                        Consumer<AreaCoordinate>(
-                          builder: (context, areaCoor, _) {
-                            return ElevatedButton(
-                              onPressed: () {
-                                print(areaCoor.listCoordinates);
-                              },
-                              child: Text("test"),
-                            );
-                          },
-                        ),
+                        // Consumer<CoordinateProvider>(
+                        //   builder: (context, areaCoor, _) {
+                        //     return ElevatedButton(
+                        //       onPressed: () {
+                        //         print(areaCoor.listCoordinates);
+                        //       },
+                        //       child: Text("test"),
+                        //     );
+                        //   },
+                        // ),
                       ],
                     ),
                   ],

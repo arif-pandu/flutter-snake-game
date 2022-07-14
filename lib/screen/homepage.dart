@@ -8,12 +8,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //
-    void setDeviceSize(double width, double height) {
-      var gameController = Provider.of<GameController>(context, listen: false);
-      gameController.setDevSize(height, width);
-      Navigator.of(context).pushReplacementNamed("/play");
-    }
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -25,7 +19,8 @@ class HomePage extends StatelessWidget {
             const Text("Snake Game"),
             ElevatedButton(
               onPressed: () {
-                setDeviceSize(width, height);
+                context.read<GameProvider>().setDevSize(height, width);
+                Navigator.of(context).pushReplacementNamed("/play");
               },
               child: Text("Play"),
             ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 
-class AreaCoordinate with ChangeNotifier {
-  final GameController game;
+class CoordinateProvider with ChangeNotifier {
+  final GameProvider game;
 
-  AreaCoordinate(this.game);
+  CoordinateProvider(this.game);
 
   double get partSize => game.snakePartSize;
 

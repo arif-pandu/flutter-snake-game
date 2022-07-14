@@ -10,27 +10,9 @@ class Food extends StatefulWidget {
 }
 
 class _FoodState extends State<Food> {
-  GameController? game;
-  @override
-  void initState() {
-    game = Provider.of<GameController>(context, listen: false);
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    // game!.addListener(() {
-    //   if ((game!.food[0] == game!.snakeHead[0]) && (game!.food[1] == game!.snakeHead[1])) {
-    //     print("= MAKAN! =");
-    //     game!.spreadFood();
-    //   }
-    // });
-    super.didChangeDependencies();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Consumer<GameController>(
+    return Consumer<GameProvider>(
       builder: (context, game, _) {
         return Positioned(
           left: game.food[0],
