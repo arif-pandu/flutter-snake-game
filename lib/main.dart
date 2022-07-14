@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_snake_game/provider/coordinate_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:flutter_snake_game/screen/gameplay.dart';
 import 'package:flutter_snake_game/screen/homepage.dart';
@@ -15,7 +16,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => GameController()),
+        ChangeNotifierProvider<GameController>(create: (context) => GameController()),
+        ChangeNotifierProxyProvider<GameController, AreaCoordinate>(
+          create: (context) => AreaCoordinate(Provider.of<GameController>(context, listen: false)),
+          update: (context, gameController, coordinates) => AreaCoordinate(gameController),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

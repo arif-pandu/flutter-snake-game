@@ -6,13 +6,9 @@ class SnakeBody extends StatelessWidget {
   const SnakeBody({
     Key? key,
     required this.index,
-    // required this.left,
-    // required this.top,
   }) : super(key: key);
 
   final int index;
-  // double left;
-  // double top;
 
   @override
   Widget build(BuildContext context) {
