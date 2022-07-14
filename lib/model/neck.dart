@@ -10,8 +10,10 @@ class SnakeNeck extends StatelessWidget {
     return Consumer<GameProvider>(
       builder: (context, game, child) {
         return Positioned(
-          left: game.snakeNeck[0],
-          top: game.snakeNeck[1],
+          // left: game.snakeNeck[0],
+          // top: game.snakeNeck[1],
+          left: -40,
+          top: -40,
           child: Container(
             height: game.snakePartSize,
             width: game.snakePartSize,

@@ -34,7 +34,7 @@ class _GamePlayState extends State<GamePlay> {
 
   void setFood() {
     var gameProvider = Provider.of<GameProvider>(context, listen: false);
-    gameProvider.spreadFood();
+    // gameProvider.spreadFood();
   }
 
   @override
@@ -72,7 +72,7 @@ class _GamePlayState extends State<GamePlay> {
                   ),
                   child: Stack(
                     children: [
-                      SnakeHead(),
+                      const SnakeHead(),
                       SnakeNeck(),
                       SnakeTail(),
                       ...game.bodyMember,
