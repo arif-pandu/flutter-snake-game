@@ -18,10 +18,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<GameProvider>(create: (context) => GameProvider()),
-        // ChangeNotifierProxyProvider<GameProvider, CoordinateProvider>(
-        //   create: (context) => CoordinateProvider(Provider.of<GameProvider>(context, listen: false)),
-        //   update: (context, gameProvider, coordinates) => CoordinateProvider(gameProvider),
-        // ),
         ChangeNotifierProxyProvider<GameProvider, SnakeProvider>(
           create: (context) => SnakeProvider(Provider.of<GameProvider>(context, listen: false)),
           update: (context, gameProvider, coordinates) => SnakeProvider(gameProvider),
@@ -30,10 +26,6 @@ class MyApp extends StatelessWidget {
           create: (context) => FoodProvider(Provider.of<GameProvider>(context, listen: false)),
           update: (context, gameProvider, coordinates) => FoodProvider(gameProvider),
         ),
-        // ChangeNotifierProxyProvider3<CoordinateProvider, SnakeProvider, FoodProvider, GameProvider>(
-        //   update: (context, value, value2, value3, previous) => GameProvider(),
-        //   create: (food) => GameProvider(),
-        // ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

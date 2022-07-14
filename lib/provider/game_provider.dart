@@ -6,12 +6,13 @@ import 'package:flutter_snake_game/model/body.dart';
 
 class GameProvider with ChangeNotifier {
   //
-  /// Variable
+  /// ========== Variable ==============
   double _screenWidth = 0.0;
   double _screenHeight = 0.0;
   double _boardSize = 0;
   double _snakePartSize = 0.0;
-  List<List<List<double>>> _listCoordinate = [];
+  List<List<List<double>>> _listCoordinateRaw = [];
+  List<List<double>> _listCoordinate = [];
 
   int snakeLength = 0;
 
@@ -36,26 +37,14 @@ class GameProvider with ChangeNotifier {
   Alignment _headAlign = Alignment.center;
   Axis _headAxisAlign = Axis.horizontal;
 
-  /// Getter
+  /// ============= Getter ============
   List<double> get gyroscopeValue => _gyroscopeValue;
   double get screenWidth => _screenWidth;
   double get screenHeight => _screenHeight;
   double get boardSize => _boardSize;
   double get snakePartSize => _snakePartSize;
-  List<List<List<double>>> get listCoordinate => [
-        ...List.generate(
-          20,
-          (indexRow) => [
-            ...List.generate(
-              20,
-              (indexColumn) => [
-                (snakePartSize * indexRow),
-                (snakePartSize * indexColumn),
-              ],
-            ),
-          ],
-        ),
-      ];
+  List<List<List<double>>> get listCoordinateRaw => _listCoordinateRaw;
+  List<List<double>> get listCoordinate => _listCoordinate;
 
   List<double> get snakeHead => _snakeHead;
   List<double> get snakeNeck => _snakeNeck;
@@ -67,8 +56,18 @@ class GameProvider with ChangeNotifier {
   Alignment get headAlign => _headAlign;
   Axis get headAxisAlign => _headAxisAlign;
 
-  /// Setter
-  ///
+  /// ========== Setter =============
+
+  set screenWidth(double value) {
+    _screenWidth = value;
+    notifyListeners();
+  }
+
+  set screenHeight(double value) {
+    _screenHeight = value;
+    notifyListeners();
+  }
+
   set gyroscopeValue(List<double> value) {
     _gyroscopeValue = value;
     notifyListeners();
@@ -84,7 +83,12 @@ class GameProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  set listCoordinate(List<List<List<double>>> value) {
+  set listCoordinateRaw(List<List<List<double>>> value) {
+    _listCoordinateRaw = value;
+    notifyListeners();
+  }
+
+  set listCoordinate(List<List<double>> value) {
     _listCoordinate = value;
     notifyListeners();
   }
@@ -124,29 +128,58 @@ class GameProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /// Void
-  ///
+  /// ======= Void =========== ///
 
+  /// Set all object size (Snake Part, board, screen, and coordinate)
   void setDevSize(double height, double width) {
-    _screenHeight = height;
-    _screenWidth = width;
+    screenHeight = height;
+    screenWidth = width;
+    boardSize = (width - 10) - (_screenWidth % 20);
+    snakePartSize = boardSize / 20;
+    // _snakeHead = [(_boardSize / 2), (_boardSize / 2) - _snakePartSize];
+    listCoordinateRaw = [
+      ...List.generate(
+        20,
+        (indexRow) => [
+          ...List.generate(
+            20,
+            (indexColumn) => [
+              (snakePartSize * indexColumn),
+              (snakePartSize * indexRow),
+            ],
+          ),
+        ],
+      ),
+    ];
 
-    _boardSize = (width - 10) - (_screenWidth % 20);
-    _snakePartSize = boardSize / 20;
-    _snakeHead = [(_boardSize / 2), (_boardSize / 2) - _snakePartSize];
+    for (var item in listCoordinateRaw) {
+      for (var innerItem in item) {
+        listCoordinate.add(innerItem);
+      }
+    }
+
+    snakeHead = listCoordinate[190];
+
     notifyListeners();
+
+    /// Optional
     print("Screen Size Saved!");
     print("Board : " + _boardSize.toStringAsFixed(2));
     print("Part : " + _snakePartSize.toStringAsFixed(2));
     print("Offset : ${_boardSize / 2}, ${(_boardSize / 2) - _snakePartSize}");
   }
 
+  /// Update Real-Time Gyroscope Value (x, y, z)
+  /// X : Vertical panorama photo mode
+  /// Y : Horizontal panorama photo mode
+  /// Z : Rotating control in car mobile game
   void updateGyro(double x, double y, double z) {
     gyroscopeValue = [x, y, z];
     updateData();
     notifyListeners();
   }
 
+  /// Find The Biggest |Value|
   void updateData() {
     List<double> tempList = [];
 
@@ -167,6 +200,7 @@ class GameProvider with ChangeNotifier {
     checkNegative();
   }
 
+  /// Checking The Axis Direction
   void checkNegative() {
     if (gyroscopeValue[axisIndex] <= 1.0) {
       isNegative = true;
@@ -176,6 +210,9 @@ class GameProvider with ChangeNotifier {
     checkDirection();
   }
 
+  /// Decide The Direction
+  /// Can't rotate 180 degrees (ex : left-> right)
+  /// Only non-opposite direction (ex : up -> right)
   void checkDirection() {
     if (axisIndex == 0) {
       if (gyroscopeValue[0] <= -1.0) {
@@ -198,11 +235,12 @@ class GameProvider with ChangeNotifier {
         }
       }
     } else {
-      print("Ngapain muter muter oi");
+      print("Why Are You Running");
     }
     notifyListeners();
   }
 
+  /// Ignore this
   void testConnect() {
     print(listCoordinate);
   }
