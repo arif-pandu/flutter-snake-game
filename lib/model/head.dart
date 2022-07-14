@@ -26,45 +26,45 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
     curve: Curves.linear,
   );
 
-  // void checkCollision() {
-  //   print("Animasi Reversed");
-  //   animationController.reverse();
-  //   print("Animation : " + animationController.status.toString());
-  // var game = Provider.of<GameProvider>(context, listen: false);
+  void checkCollision() {
+    animationController.reverse();
+    animationController.forward();
 
-  // List<double> bodyAndTailX() {
-  //   List<double> _temp = [];
-  //   for (var item in game.xPart) {
-  //     _temp.add(item);
-  //   }
-  //   _temp.removeWhere((element) => element == game.snakeHead[0]);
-  //   return _temp;
-  // }
+    var game = Provider.of<GameProvider>(context, listen: false);
 
-  // List<double> bodyAndTailY() {
-  //   List<double> _temp = [];
-  //   for (var item in game.yPart) {
-  //     _temp.add(item);
-  //   }
-  //   _temp.removeWhere((element) => element == game.snakeHead[1]);
-  //   return _temp;
-  // }
+    // List<double> bodyAndTailX() {
+    //   List<double> _temp = [];
+    //   for (var item in game.xPart) {
+    //     _temp.add(item);
+    //   }
+    //   _temp.removeWhere((element) => element == game.snakeHead[0]);
+    //   return _temp;
+    // }
 
-  /// ==== Check Collision ====
+    // List<double> bodyAndTailY() {
+    //   List<double> _temp = [];
+    //   for (var item in game.yPart) {
+    //     _temp.add(item);
+    //   }
+    //   _temp.removeWhere((element) => element == game.snakeHead[1]);
+    //   return _temp;
+    // }
 
-  // if ((game.snakeHead[0] == game.food[0]) && (game.snakeHead[1] == game.food[1])) {
-  //   animationController.forward();
-  //   print("====== MAKAN ! =======");
-  //   game.addBody();
-  //   game.spreadFood();
-  // }
-  // if ((bodyAndTailX().contains(game.snakeHead[0])) && (bodyAndTailY().contains(game.snakeHead[1]))) {
-  //   /// If Head Collide with body or tail
-  // } else {
-  //   animationController.forward();
-  //   // Lurus Terus Pantang Mundur
-  // }
-  // }
+    /// ==== Check Collision ====
+
+    // if ((game.snakeHead[0] == game.food[0]) && (game.snakeHead[1] == game.food[1])) {
+    //   animationController.forward();
+    //   print("====== MAKAN ! =======");
+    //   game.addBody();
+    //   game.spreadFood();
+    // }
+    // if ((bodyAndTailX().contains(game.snakeHead[0])) && (bodyAndTailY().contains(game.snakeHead[1]))) {
+    //   /// If Head Collide with body or tail
+    // } else {
+    //   animationController.forward();
+    //   // Lurus Terus Pantang Mundur
+    // }
+  }
 
   @override
   void initState() {
@@ -84,11 +84,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
         if (status == AnimationStatus.completed) {
           var snake = Provider.of<SnakeProvider>(context, listen: false);
           snake.straightAhead();
-
-          print("Animasi Komplit");
-          // animationController.reverse().then((value) => checkCollision());
-          animationController.reverse().then((value) => animationController.forward());
-          print("Animation : " + animationController.status.toString());
+          animationController.reverse().then((value) => checkCollision());
         }
       },
     );

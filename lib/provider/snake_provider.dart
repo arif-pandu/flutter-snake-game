@@ -28,11 +28,23 @@ class SnakeProvider with ChangeNotifier {
       gameProvider.headAxisAlign = Axis.vertical;
       gameProvider.lastDirection = Direction.up;
     }
-
-    print("Maju Lurus");
-    print(gameProvider.snakeHead);
-
+    neckFollowHead();
     notifyListeners();
+  }
+
+  void neckFollowHead() {
+    var _temp = 0;
+    _temp = gameProvider.snakeHead;
+
+    if (gameProvider.direction == Direction.right) {
+      gameProvider.snakeNeck = _temp - 1;
+    } else if (gameProvider.direction == Direction.left) {
+      gameProvider.snakeNeck = _temp + 1;
+    } else if (gameProvider.direction == Direction.down) {
+      gameProvider.snakeNeck = _temp - 20;
+    } else if (gameProvider.direction == Direction.up) {
+      gameProvider.snakeNeck = _temp + 20;
+    }
   }
 
   //  void straightAhead() {
