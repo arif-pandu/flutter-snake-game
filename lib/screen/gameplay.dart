@@ -4,7 +4,6 @@ import 'package:flutter_snake_game/model/food.dart';
 import 'package:flutter_snake_game/model/head.dart';
 import 'package:flutter_snake_game/model/neck.dart';
 import 'package:flutter_snake_game/model/tail.dart';
-import 'package:flutter_snake_game/provider/coordinate_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -136,6 +135,12 @@ class _GamePlayState extends State<GamePlay> {
                             game.direction = Direction.left;
                           },
                           child: Text("Left"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            game.testConnect();
+                          },
+                          child: Text("TEST"),
                         ),
                         // Consumer<CoordinateProvider>(
                         //   builder: (context, areaCoor, _) {

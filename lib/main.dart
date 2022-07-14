@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_snake_game/provider/coordinate_provider.dart';
 import 'package:flutter_snake_game/provider/food_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:flutter_snake_game/provider/snake_provider.dart';
@@ -19,10 +18,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<GameProvider>(create: (context) => GameProvider()),
-        ChangeNotifierProxyProvider<GameProvider, CoordinateProvider>(
-          create: (context) => CoordinateProvider(Provider.of<GameProvider>(context, listen: false)),
-          update: (context, gameProvider, coordinates) => CoordinateProvider(gameProvider),
-        ),
+        // ChangeNotifierProxyProvider<GameProvider, CoordinateProvider>(
+        //   create: (context) => CoordinateProvider(Provider.of<GameProvider>(context, listen: false)),
+        //   update: (context, gameProvider, coordinates) => CoordinateProvider(gameProvider),
+        // ),
         ChangeNotifierProxyProvider<GameProvider, SnakeProvider>(
           create: (context) => SnakeProvider(Provider.of<GameProvider>(context, listen: false)),
           update: (context, gameProvider, coordinates) => SnakeProvider(gameProvider),

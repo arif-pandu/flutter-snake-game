@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/enum.dart';
 import 'package:flutter_snake_game/model/body.dart';
-import 'package:flutter_snake_game/provider/coordinate_provider.dart';
 
 class GameProvider with ChangeNotifier {
   //
@@ -12,6 +11,8 @@ class GameProvider with ChangeNotifier {
   double _screenHeight = 0.0;
   double _boardSize = 0;
   double _snakePartSize = 0.0;
+  List<List<List<double>>> _listCoordinate = [];
+
   int snakeLength = 0;
 
   List<double> _gyroscopeValue = [0, 0, 0];
@@ -41,6 +42,20 @@ class GameProvider with ChangeNotifier {
   double get screenHeight => _screenHeight;
   double get boardSize => _boardSize;
   double get snakePartSize => _snakePartSize;
+  List<List<List<double>>> get listCoordinate => [
+        ...List.generate(
+          20,
+          (indexRow) => [
+            ...List.generate(
+              20,
+              (indexColumn) => [
+                (snakePartSize * indexRow),
+                (snakePartSize * indexColumn),
+              ],
+            ),
+          ],
+        ),
+      ];
 
   List<double> get snakeHead => _snakeHead;
   List<double> get snakeNeck => _snakeNeck;
@@ -66,6 +81,11 @@ class GameProvider with ChangeNotifier {
 
   set snakePartSize(double value) {
     _snakePartSize = value;
+    notifyListeners();
+  }
+
+  set listCoordinate(List<List<List<double>>> value) {
+    _listCoordinate = value;
     notifyListeners();
   }
 
@@ -181,9 +201,13 @@ class GameProvider with ChangeNotifier {
       print("Ngapain muter muter oi");
     }
     notifyListeners();
-
-    // print("Last Direction " + lastDirection.name.toString());
   }
+
+  void testConnect() {
+    print(listCoordinate);
+  }
+
+  // MULAI DARI SINI NANTI PINDAH PER FUNGSINYA
 
   void straightAhead() {
     if (direction == Direction.right) {
