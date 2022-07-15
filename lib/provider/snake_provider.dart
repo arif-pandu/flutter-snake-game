@@ -7,18 +7,34 @@ class SnakeProvider with ChangeNotifier {
   SnakeProvider(this.gameProvider);
   final GameProvider gameProvider;
 
-  createHistory(List<int> value) {
-    gameProvider.snakeHistory = value;
+  createHistory() {
+    // Create History By Last Move Point
+    List<int> tempList = [];
+
+    tempList.add(gameProvider.snakeHead);
+    tempList.add(gameProvider.snakeNeck);
+    if (gameProvider.snakeBody.isNotEmpty) {
+      for (var item in gameProvider.snakeBody) {
+        tempList.add(item);
+      }
+    }
+
+    gameProvider.snakeHistory = tempList;
+
+    // gameProvider.snakeHistory.add(gameProvider.snakeHead);
+    // gameProvider.snakeHistory.add(gameProvider.snakeNeck);
+    // if (gameProvider.snakeBody.isNotEmpty) {
+    //   for (var item in gameProvider.snakeBody) {
+    //     gameProvider.snakeHistory.add(item);
+    //   }
+    // }
+
     notifyListeners();
   }
 
   void straightAhead() {
-    createHistory(
-      [
-        gameProvider.snakeHead,
-        gameProvider.snakeNeck,
-      ],
-    );
+    createHistory();
+
     if (gameProvider.direction == Direction.right) {
       gameProvider.snakeHead++;
       gameProvider.headAlign = Alignment.centerLeft;
@@ -64,38 +80,8 @@ class SnakeProvider with ChangeNotifier {
 
   void bodyFollowNeck() {
     for (var item in gameProvider.bodyMember) {
-      // First Body Member
-      // if (item.number == 0) {
-      //   if (gameProvider.direction == Direction.right) {
-      //     switch (gameProvider.lastDirection) {
-      //       case Direction.up:
-      //         break;
-      //       case Direction.down:
-      //         // TODO: Handle this case.
-      //         break;
-      //       case Direction.right:
-      //         // TODO: Handle this case.
-      //         break;
-      //       case Direction.left:
-      //         // TODO: Handle this case.
-      //         break;
-      //       case Direction.idle:
-      //         // TODO: Handle this case.
-      //         break;
-      //     }
-      //   }
-      if (gameProvider.direction == Direction.right) {
-        gameProvider.snakeBody[0] = gameProvider.snakeHistory[1];
-      } else if (gameProvider.direction == Direction.left) {
-        gameProvider.snakeBody[0] = gameProvider.snakeHistory[1];
-      } else if (gameProvider.direction == Direction.down) {
-        gameProvider.snakeBody[0] = gameProvider.snakeHistory[1];
-      } else if (gameProvider.direction == Direction.up) {
-        gameProvider.snakeBody[0] = gameProvider.snakeHistory[1];
-        // }
-        notifyListeners();
-      }
-      // Second and so on body members
+      gameProvider.snakeBody[item.number] = gameProvider.snakeHistory[item.number + 1];
+      notifyListeners();
     }
   }
 
@@ -116,8 +102,24 @@ class SnakeProvider with ChangeNotifier {
       } else if (gameProvider.direction == Direction.up) {
         gameProvider.snakeBody.add(gameProvider.snakeHistory[1] + 20);
       }
-
       gameProvider.bodyMember.add(SnakeBody(index: 0));
+      gameProvider.snakeLength++;
+      //
+    } else if (gameProvider.snakeLength > 0) {
+      //
+      if (gameProvider.direction == Direction.right) {
+        gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength] - 1);
+      } else if (gameProvider.direction == Direction.left) {
+        gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength] + 1);
+      } else if (gameProvider.direction == Direction.down) {
+        gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength] - 20);
+      } else if (gameProvider.direction == Direction.up) {
+        gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength] + 20);
+      }
+
+      gameProvider.bodyMember.add(SnakeBody(index: gameProvider.snakeLength));
+      gameProvider.snakeLength++;
     }
+    notifyListeners();
   }
 }
