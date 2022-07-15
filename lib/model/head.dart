@@ -28,7 +28,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
   );
 
   void checkCollision() {
-    animationController.reverse();
+    // animationController.reverse();
     animationController.forward();
 
     var game = Provider.of<GameProvider>(context, listen: false);

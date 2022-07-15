@@ -92,34 +92,38 @@ class SnakeProvider with ChangeNotifier {
   void setBodyPosition() {
     // if snake.length == 0 => follow neck
     // if snake.length > 0  => follow index before
-    if (gameProvider.snakeLength == 0) {
-      if (gameProvider.direction == Direction.right) {
-        gameProvider.snakeBody.add(gameProvider.snakeHistory[1] - 1);
-      } else if (gameProvider.direction == Direction.left) {
-        gameProvider.snakeBody.add(gameProvider.snakeHistory[1] + 1);
-      } else if (gameProvider.direction == Direction.down) {
-        gameProvider.snakeBody.add(gameProvider.snakeHistory[1] - 20);
-      } else if (gameProvider.direction == Direction.up) {
-        gameProvider.snakeBody.add(gameProvider.snakeHistory[1] + 20);
-      }
-      gameProvider.bodyMember.add(SnakeBody(index: 0));
-      gameProvider.snakeLength++;
-      //
-    } else if (gameProvider.snakeLength > 0) {
-      //
-      if (gameProvider.direction == Direction.right) {
-        gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength] - 1);
-      } else if (gameProvider.direction == Direction.left) {
-        gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength] + 1);
-      } else if (gameProvider.direction == Direction.down) {
-        gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength] - 20);
-      } else if (gameProvider.direction == Direction.up) {
-        gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength] + 20);
-      }
+    // if (gameProvider.snakeLength == 0) {
+    //   if (gameProvider.direction == Direction.right) {
+    //     gameProvider.snakeBody.add(gameProvider.snakeHistory[1]);
+    //   } else if (gameProvider.direction == Direction.left) {
+    //     gameProvider.snakeBody.add(gameProvider.snakeHistory[1]);
+    //   } else if (gameProvider.direction == Direction.down) {
+    //     gameProvider.snakeBody.add(gameProvider.snakeHistory[1]);
+    //   } else if (gameProvider.direction == Direction.up) {
+    //     gameProvider.snakeBody.add(gameProvider.snakeHistory[1]);
+    //   }
+    //   gameProvider.bodyMember.add(SnakeBody(index: 0));
+    //   gameProvider.snakeLength++;
+    //   //
+    // } else if (gameProvider.snakeLength > 0) {
+    //   //
+    //   if (gameProvider.direction == Direction.right) {
+    //     gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength + 1]);
+    //   } else if (gameProvider.direction == Direction.left) {
+    //     gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength + 1]);
+    //   } else if (gameProvider.direction == Direction.down) {
+    //     gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength + 1]);
+    //   } else if (gameProvider.direction == Direction.up) {
+    //     gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength + 1]);
+    //   }
 
-      gameProvider.bodyMember.add(SnakeBody(index: gameProvider.snakeLength));
-      gameProvider.snakeLength++;
-    }
+    //   gameProvider.bodyMember.add(SnakeBody(index: gameProvider.snakeLength));
+    //   gameProvider.snakeLength++;
+    // }
+
+    gameProvider.snakeBody.add(gameProvider.snakeHistory[gameProvider.snakeLength + 1]);
+    gameProvider.bodyMember.add(SnakeBody(index: gameProvider.snakeLength));
+    gameProvider.snakeLength++;
     notifyListeners();
   }
 }
