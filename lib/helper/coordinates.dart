@@ -1,18 +1,24 @@
-import 'package:flutter/widgets.dart';
-import 'package:flutter_snake_game/provider/game_provider.dart';
-import 'package:provider/provider.dart';
+// import 'package:flutter/widgets.dart';
+// import 'package:flutter_snake_game/provider/game_provider.dart';
+// import 'package:provider/provider.dart';
 
-class Coordinates {
-  // double pixel(BuildContext context) => Provider.of<GameController>(context).snakePartSize;
-  List listCoordinates = [
-    ...List.generate(
-      20,
-      (index) => [
-        ...List.generate(
-          20,
-          (indexToo) => indexToo,
-        ),
-      ],
-    ),
-  ];
-}
+// class Coordinate {
+//   final gameProvider gameProvider;
+
+//   // BIKIN LIST COORDINATES BIAR GAMPANG
+
+//   List listCoordinates(BuildContext context) => [
+//         ...List.generate(
+//           20,
+//           (indexRow) => [
+//             ...List.generate(
+//               20,
+//               (indexColumn) => [
+//                 partSize(context) * indexRow,
+//                 partSize(context) * indexColumn,
+//               ],
+//             ),
+//           ],
+//         ),
+//       ];
+// }

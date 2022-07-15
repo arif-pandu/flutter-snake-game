@@ -6,23 +6,21 @@ class SnakeBody extends StatelessWidget {
   const SnakeBody({
     Key? key,
     required this.index,
-    // required this.left,
-    // required this.top,
   }) : super(key: key);
 
   final int index;
-  // double left;
-  // double top;
+
+  int get number => this.index;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GameController>(
+    return Consumer<GameProvider>(
       builder: (context, game, child) {
         return Positioned(
-          left: game.snakeBody[index][0],
-          top: game.snakeBody[index][1],
-          // left: 0,
-          // top: 0,
+          left: game.listCoordinate[game.snakeBody[index]].x.toDouble(),
+          top: game.listCoordinate[game.snakeBody[index]].y.toDouble(),
+          // left: -40,
+          // top: -40,
           child: Container(
             height: game.snakePartSize,
             width: game.snakePartSize,

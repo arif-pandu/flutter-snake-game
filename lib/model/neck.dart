@@ -7,15 +7,19 @@ class SnakeNeck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GameController>(
+    return Consumer<GameProvider>(
       builder: (context, game, child) {
         return Positioned(
-          left: game.snakeNeck[0],
-          top: game.snakeNeck[1],
+          left: game.listCoordinate[game.snakeNeck].x.toDouble(),
+          top: game.listCoordinate[game.snakeNeck].y.toDouble(),
+          // left: -40,
+          // top: -40,
           child: Container(
             height: game.snakePartSize,
             width: game.snakePartSize,
-            color: Colors.blue,
+            color: (game.listCoordinate[game.snakeNeck]) == (game.listCoordinate[game.snakeHead]) //
+                ? Colors.transparent
+                : Colors.blue,
           ),
         );
       },

@@ -4,6 +4,7 @@ import 'package:flutter_snake_game/model/food.dart';
 import 'package:flutter_snake_game/model/head.dart';
 import 'package:flutter_snake_game/model/neck.dart';
 import 'package:flutter_snake_game/model/tail.dart';
+import 'package:flutter_snake_game/provider/food_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -20,21 +21,21 @@ class _GamePlayState extends State<GamePlay> {
   late double boardSize;
 
   void getBoardSize() {
-    var gameController = Provider.of<GameController>(context, listen: false);
-    boardSize = gameController.boardSize;
-    // print("Board Size : " + gameController.boardSize.toStringAsFixed(2));
+    var gameProvider = Provider.of<GameProvider>(context, listen: false);
+    boardSize = gameProvider.boardSize;
+    // print("Board Size : " + gameProvider.boardSize.toStringAsFixed(2));
   }
 
   void setGyroscope() {
     gyroscopeEvents.listen((event) {
-      var gameController = Provider.of<GameController>(context, listen: false);
-      gameController.updateGyro(event.x, event.y, event.z);
+      var gameProvider = Provider.of<GameProvider>(context, listen: false);
+      gameProvider.updateGyro(event.x, event.y, event.z);
     });
   }
 
   void setFood() {
-    var gameController = Provider.of<GameController>(context, listen: false);
-    gameController.spreadFood();
+    var foodProvider = Provider.of<FoodProvider>(context, listen: false);
+    foodProvider.spreadFood();
   }
 
   @override
@@ -62,7 +63,7 @@ class _GamePlayState extends State<GamePlay> {
                 ],
               ),
             ),
-            Consumer<GameController>(
+            Consumer<GameProvider>(
               builder: (context, game, child) {
                 return Container(
                   width: boardSize,
@@ -72,18 +73,18 @@ class _GamePlayState extends State<GamePlay> {
                   ),
                   child: Stack(
                     children: [
-                      SnakeHead(),
-                      SnakeNeck(),
-                      SnakeTail(),
+                      const Food(),
+                      const SnakeTail(),
                       ...game.bodyMember,
-                      Food(),
+                      const SnakeNeck(),
+                      const SnakeHead(),
                     ],
                   ),
                 );
               },
             ),
-            Consumer<GameController>(
-              builder: (context, game, child) {
+            Consumer<GameProvider>(
+              builder: (context, game, _) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -135,6 +136,12 @@ class _GamePlayState extends State<GamePlay> {
                             game.direction = Direction.left;
                           },
                           child: Text("Left"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            game.testConnect();
+                          },
+                          child: Text("TEST"),
                         ),
                       ],
                     ),
