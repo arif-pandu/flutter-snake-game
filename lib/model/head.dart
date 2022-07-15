@@ -32,6 +32,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
     animationController.forward();
 
     var game = Provider.of<GameProvider>(context, listen: false);
+    var snake = Provider.of<SnakeProvider>(context, listen: false);
     var food = Provider.of<FoodProvider>(context, listen: false);
 
     List<int> collideBodyIndex = [];
@@ -43,43 +44,11 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
 
     if (game.snakeHead == game.food) {
       print("=== MAKAN ! ====");
+      snake.addBody();
       food.spreadFood();
     } else if (collideBodyIndex.isNotEmpty && collideBodyIndex.contains(game.snakeHead)) {
       print("=== Nabrak Badan ===");
     }
-
-    // List<double> bodyAndTailX() {
-    //   List<double> _temp = [];
-    //   for (var item in game.xPart) {
-    //     _temp.add(item);
-    //   }
-    //   _temp.removeWhere((element) => element == game.snakeHead[0]);
-    //   return _temp;
-    // }
-
-    // List<double> bodyAndTailY() {
-    //   List<double> _temp = [];
-    //   for (var item in game.yPart) {
-    //     _temp.add(item);
-    //   }
-    //   _temp.removeWhere((element) => element == game.snakeHead[1]);
-    //   return _temp;
-    // }
-
-    /// ==== Check Collision ====
-
-    // if ((game.snakeHead[0] == game.food[0]) && (game.snakeHead[1] == game.food[1])) {
-    //   animationController.forward();
-    //   print("====== MAKAN ! =======");
-    //   game.addBody();
-    //   game.spreadFood();
-    // }
-    // if ((bodyAndTailX().contains(game.snakeHead[0])) && (bodyAndTailY().contains(game.snakeHead[1]))) {
-    //   /// If Head Collide with body or tail
-    // } else {
-    //   animationController.forward();
-    //   // Lurus Terus Pantang Mundur
-    // }
   }
 
   @override

@@ -15,6 +15,7 @@ class GameProvider with ChangeNotifier {
   List<Point> _listCoordinate = [];
 
   int snakeLength = 0;
+  List<int> _snakeHistory = [];
 
   List<double> _gyroscopeValue = [0, 0, 0];
 
@@ -47,6 +48,8 @@ class GameProvider with ChangeNotifier {
   List<Point> get listCoordinate => _listCoordinate;
 
   int get food => _food;
+
+  List<int> get snakeHistory => _snakeHistory;
 
   int get snakeHead => _snakeHead;
   int get snakeNeck => _snakeNeck;
@@ -98,6 +101,11 @@ class GameProvider with ChangeNotifier {
   set food(int value) {
     _food = value;
     // notifyListeners();
+  }
+
+  set snakeHistory(List<int> value) {
+    _snakeHistory = value;
+    notifyListeners();
   }
 
   set snakeHead(int value) {

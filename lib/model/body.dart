@@ -10,15 +10,17 @@ class SnakeBody extends StatelessWidget {
 
   final int index;
 
+  int get number => this.index;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<GameProvider>(
       builder: (context, game, child) {
         return Positioned(
-          // left: game.snakeBody[index][0],
-          // top: game.snakeBody[index][1],
-          left: -40,
-          top: -40,
+          left: game.listCoordinate[game.snakeBody[index]].x.toDouble(),
+          top: game.listCoordinate[game.snakeBody[index]].y.toDouble(),
+          // left: -40,
+          // top: -40,
           child: Container(
             height: game.snakePartSize,
             width: game.snakePartSize,
