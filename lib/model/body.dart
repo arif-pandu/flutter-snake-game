@@ -24,7 +24,7 @@ class SnakeBody extends StatelessWidget {
           child: Container(
             height: game.snakePartSize,
             width: game.snakePartSize,
-            color: Colors.black54,
+            color: Colors.green,
           ),
         );
       },

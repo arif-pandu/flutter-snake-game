@@ -27,6 +27,12 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
     curve: Curves.linear,
   );
 
+  BorderSide bordered = const BorderSide(width: 1, color: Colors.black87);
+  BorderSide nonBorder = const BorderSide(width: 0, color: Colors.transparent);
+
+  Radius rounded = const Radius.circular(5);
+  Radius nonRounded = const Radius.circular(0);
+
   void checkCollision() {
     // animationController.reverse();
     animationController.forward();
@@ -98,9 +104,9 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
               child: SizeTransition(
                 sizeFactor: animation,
                 axis: game.headAxisAlign,
-                axisAlignment: -1,
+                axisAlignment: (game.headAlign == Alignment.centerRight) || (game.headAlign == Alignment.bottomCenter) ? -1 : 1,
                 child: Container(
-                  color: Colors.black,
+                  color: Colors.green,
                   height: game.snakePartSize,
                   width: game.snakePartSize,
                 ),
