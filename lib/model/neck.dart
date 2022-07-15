@@ -17,7 +17,9 @@ class SnakeNeck extends StatelessWidget {
           child: Container(
             height: game.snakePartSize,
             width: game.snakePartSize,
-            color: Colors.blue,
+            color: (game.listCoordinate[game.snakeNeck]) == (game.listCoordinate[game.snakeHead]) //
+                ? Colors.transparent
+                : Colors.blue,
           ),
         );
       },

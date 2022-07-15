@@ -18,7 +18,7 @@ class GameProvider with ChangeNotifier {
 
   List<double> _gyroscopeValue = [0, 0, 0];
 
-  List<double> food = [-15, -15];
+  int _food = 19;
 
   int _snakeHead = 0;
   int _snakeNeck = 0;
@@ -27,8 +27,8 @@ class GameProvider with ChangeNotifier {
 
   List<SnakeBody> _bodyMember = [];
 
-  List<double> xPart = [];
-  List<double> yPart = [];
+  // List<double> xPart = [];
+  // List<double> yPart = [];
 
   int axisIndex = 0;
   bool isNegative = false;
@@ -45,6 +45,8 @@ class GameProvider with ChangeNotifier {
   double get snakePartSize => _snakePartSize;
   List<List<Point>> get listCoordinateRaw => _listCoordinateRaw;
   List<Point> get listCoordinate => _listCoordinate;
+
+  int get food => _food;
 
   int get snakeHead => _snakeHead;
   int get snakeNeck => _snakeNeck;
@@ -91,6 +93,11 @@ class GameProvider with ChangeNotifier {
   set listCoordinate(List<Point> value) {
     _listCoordinate = value;
     notifyListeners();
+  }
+
+  set food(int value) {
+    _food = value;
+    // notifyListeners();
   }
 
   set snakeHead(int value) {
@@ -163,8 +170,10 @@ class GameProvider with ChangeNotifier {
     }
 
     var random = [189, 190, 209, 210];
+    int initPoint = random[Random().nextInt(random.length)];
 
-    snakeHead = random[Random().nextInt(random.length)];
+    snakeHead = initPoint;
+    snakeNeck = initPoint;
 
     notifyListeners();
 

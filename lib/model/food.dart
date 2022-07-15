@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_snake_game/provider/food_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +16,8 @@ class _FoodState extends State<Food> {
     return Consumer<GameProvider>(
       builder: (context, game, _) {
         return Positioned(
-          left: game.food[0],
-          top: game.food[1],
+          left: game.listCoordinate[game.food].x.toDouble(),
+          top: game.listCoordinate[game.food].y.toDouble(),
           child: SizedBox(
             height: game.snakePartSize,
             width: game.snakePartSize,

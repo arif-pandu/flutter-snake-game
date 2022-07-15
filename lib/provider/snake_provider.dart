@@ -46,32 +46,4 @@ class SnakeProvider with ChangeNotifier {
       gameProvider.snakeNeck = _temp + 20;
     }
   }
-
-  //  void straightAhead() {
-  //   if (direction == Direction.right) {
-  //     snakeHead[0] = snakeHead[0] += snakePartSize;
-  //     neckFollowHead(0, false, 1);
-  //     headAlign = Alignment.centerLeft;
-  //     headAxisAlign = Axis.horizontal;
-  //     lastDirection = Direction.right;
-  //   } else if (direction == Direction.left) {
-  //     snakeHead[0] = snakeHead[0] -= snakePartSize;
-  //     neckFollowHead(0, true, 1);
-  //     headAlign = Alignment.centerRight;
-  //     headAxisAlign = Axis.horizontal;
-  //     lastDirection = Direction.left;
-  //   } else if (direction == Direction.down) {
-  //     snakeHead[1] = snakeHead[1] += snakePartSize;
-  //     neckFollowHead(1, false, 0);
-  //     headAlign = Alignment.topCenter;
-  //     headAxisAlign = Axis.vertical;
-  //     lastDirection = Direction.down;
-  //   } else if (direction == Direction.up) {
-  //     snakeHead[1] = snakeHead[1] -= snakePartSize;
-  //     neckFollowHead(1, true, 0);
-  //     headAlign = Alignment.bottomCenter;
-  //     headAxisAlign = Axis.vertical;
-  //     lastDirection = Direction.up;
-  //   }
-  // }
 }

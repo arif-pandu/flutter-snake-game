@@ -4,6 +4,7 @@ import 'package:flutter_snake_game/model/food.dart';
 import 'package:flutter_snake_game/model/head.dart';
 import 'package:flutter_snake_game/model/neck.dart';
 import 'package:flutter_snake_game/model/tail.dart';
+import 'package:flutter_snake_game/provider/food_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -33,8 +34,8 @@ class _GamePlayState extends State<GamePlay> {
   }
 
   void setFood() {
-    var gameProvider = Provider.of<GameProvider>(context, listen: false);
-    // gameProvider.spreadFood();
+    var foodProvider = Provider.of<FoodProvider>(context, listen: false);
+    foodProvider.spreadFood();
   }
 
   @override
@@ -72,11 +73,11 @@ class _GamePlayState extends State<GamePlay> {
                   ),
                   child: Stack(
                     children: [
-                      const SnakeHead(),
-                      SnakeNeck(),
-                      SnakeTail(),
+                      const Food(),
+                      const SnakeTail(),
                       ...game.bodyMember,
-                      Food(),
+                      const SnakeNeck(),
+                      const SnakeHead(),
                     ],
                   ),
                 );

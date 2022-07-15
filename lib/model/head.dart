@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/enum.dart';
+import 'package:flutter_snake_game/provider/food_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:flutter_snake_game/provider/snake_provider.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
     animationController.reverse();
     animationController.forward();
 
-    var game = Provider.of<GameProvider>(context, listen: false);
+    var game = Provider.of<FoodProvider>(context, listen: false);
 
     // List<double> bodyAndTailX() {
     //   List<double> _temp = [];
