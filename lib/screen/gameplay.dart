@@ -143,16 +143,6 @@ class _GamePlayState extends State<GamePlay> {
                           },
                           child: Text("TEST"),
                         ),
-                        // Consumer<CoordinateProvider>(
-                        //   builder: (context, areaCoor, _) {
-                        //     return ElevatedButton(
-                        //       onPressed: () {
-                        //         print(areaCoor.listCoordinates);
-                        //       },
-                        //       child: Text("test"),
-                        //     );
-                        //   },
-                        // ),
                       ],
                     ),
                   ],

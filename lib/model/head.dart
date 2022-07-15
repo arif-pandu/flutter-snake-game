@@ -31,7 +31,22 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
     animationController.reverse();
     animationController.forward();
 
-    var game = Provider.of<FoodProvider>(context, listen: false);
+    var game = Provider.of<GameProvider>(context, listen: false);
+    var food = Provider.of<FoodProvider>(context, listen: false);
+
+    List<int> collideBodyIndex = [];
+    if (game.snakeBody.isNotEmpty) {
+      for (var item in game.snakeBody) {
+        collideBodyIndex.add(item);
+      }
+    }
+
+    if (game.snakeHead == game.food) {
+      print("=== MAKAN ! ====");
+      food.spreadFood();
+    } else if (collideBodyIndex.isNotEmpty && collideBodyIndex.contains(game.snakeHead)) {
+      print("=== Nabrak Badan ===");
+    }
 
     // List<double> bodyAndTailX() {
     //   List<double> _temp = [];
@@ -70,7 +85,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
   @override
   void initState() {
     Future.delayed(
-      Duration(seconds: 1),
+      const Duration(seconds: 1),
       () {
         animationController.forward();
       },
@@ -89,8 +104,13 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
         }
       },
     );
-
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   @override
