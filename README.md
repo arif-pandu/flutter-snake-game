@@ -1,16 +1,21 @@
-# flutter_snake_game
+# Flutter Snake Game
 
-A new Flutter project.
 
-## Getting Started
+## Preview
+<br/>
+<a href="https://github.com/arif-pandu/flutter-snake-game">
+   <img src="preview-1.jpg" alt="Preview-1" width="200">
+</a>
+<a href="https://github.com/arif-pandu/flutter-snake-game">
+   <img src="preview-3.jpg" alt="Preview-1" width="200">
+</a>
+<a href="https://github.com/arif-pandu/flutter-snake-game">
+   <img src="preview-3.jpg" alt="Preview-1" width="200">
+</a>
 
-This project is a starting point for a Flutter application.
+## About
 
-A few resources to get you started if this is your first Flutter project:
+Just clone or use it if you want, Also don't forget to share with others 😉
+And leave a star ⭐ if you like
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
