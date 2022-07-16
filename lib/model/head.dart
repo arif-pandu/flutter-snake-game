@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/color.dart';
 import 'package:flutter_snake_game/helper/enum.dart';
+import 'package:flutter_snake_game/model/popup_gameover.dart';
 import 'package:flutter_snake_game/provider/food_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:flutter_snake_game/provider/snake_provider.dart';
@@ -54,6 +55,8 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
       snake.addBody();
       food.spreadFood();
     } else if (collideBodyIndex.isNotEmpty && collideBodyIndex.contains(game.snakeHead)) {
+      animationController.stop();
+      popUpGameOver(context);
       print("=== Nabrak Badan ===");
     }
   }
@@ -93,8 +96,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Consumer<GameProvider>(
       builder: (context, game, child) {
-        return AnimatedPositioned(
-          duration: Duration(milliseconds: 0),
+        return Positioned(
           left: game.listCoordinate[game.snakeHead].x.toDouble(),
           top: game.listCoordinate[game.snakeHead].y.toDouble(),
           child: SizedBox(

@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/color.dart';
 import 'package:flutter_snake_game/helper/enum.dart';
 import 'package:flutter_snake_game/model/food.dart';
 import 'package:flutter_snake_game/model/head.dart';
 import 'package:flutter_snake_game/model/neck.dart';
-import 'package:flutter_snake_game/model/tail.dart';
 import 'package:flutter_snake_game/provider/food_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,7 @@ class GamePlay extends StatefulWidget {
 class _GamePlayState extends State<GamePlay> {
   //
   late double boardSize;
+  final _streamSubscriptions = <StreamSubscription<GyroscopeEvent>>[];
 
   void getBoardSize() {
     var gameProvider = Provider.of<GameProvider>(context, listen: false);
@@ -28,10 +30,10 @@ class _GamePlayState extends State<GamePlay> {
   }
 
   void setGyroscope() {
-    gyroscopeEvents.listen((event) {
+    _streamSubscriptions.add(gyroscopeEvents.listen((event) {
       var gameProvider = Provider.of<GameProvider>(context, listen: false);
       gameProvider.updateGyro(event.x, event.y, event.z);
-    });
+    }));
   }
 
   void setFood() {
@@ -45,6 +47,14 @@ class _GamePlayState extends State<GamePlay> {
     setGyroscope();
     setFood();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    for (var item in _streamSubscriptions) {
+      item.cancel();
+    }
   }
 
   @override
@@ -94,7 +104,6 @@ class _GamePlayState extends State<GamePlay> {
                   child: Stack(
                     children: [
                       const Food(),
-                      const SnakeTail(),
                       ...game.bodyMember,
                       const SnakeNeck(),
                       const SnakeHead(),
