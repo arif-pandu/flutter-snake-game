@@ -36,7 +36,6 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
   Radius nonRounded = const Radius.circular(0);
 
   void checkCollision() {
-    // animationController.reverse();
     animationController.forward();
 
     var game = Provider.of<GameProvider>(context, listen: false);
@@ -50,14 +49,15 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
       }
     }
 
+    /// If Snake Head collide with FOOD or BODY
     if (game.snakeHead == game.food) {
-      print("=== MAKAN ! ====");
+      print("=== EAT FOOD ! ====");
       snake.addBody();
       food.spreadFood();
     } else if (collideBodyIndex.isNotEmpty && collideBodyIndex.contains(game.snakeHead)) {
       animationController.stop();
       popUpGameOver(context);
-      print("=== Nabrak Badan ===");
+      print("=== DUARRR !!! ===");
     }
   }
 
