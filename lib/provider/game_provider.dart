@@ -23,7 +23,6 @@ class GameProvider with ChangeNotifier {
 
   int _snakeHead = 0;
   int _snakeNeck = 0;
-  int _snakeTail = 0;
   List<int> _snakeBody = [];
 
   List<SnakeBody> _bodyMember = [];
@@ -53,7 +52,6 @@ class GameProvider with ChangeNotifier {
 
   int get snakeHead => _snakeHead;
   int get snakeNeck => _snakeNeck;
-  int get snakeTail => _snakeTail;
   List<int> get snakeBody => _snakeBody;
 
   List<SnakeBody> get bodyMember => _bodyMember;
@@ -115,11 +113,6 @@ class GameProvider with ChangeNotifier {
 
   set snakeNeck(int value) {
     _snakeNeck = value;
-    notifyListeners();
-  }
-
-  set snakeTail(int value) {
-    _snakeTail = value;
     notifyListeners();
   }
 
@@ -268,146 +261,20 @@ class GameProvider with ChangeNotifier {
     print(listCoordinate);
   }
 
-  // MULAI DARI SINI NANTI PINDAH PER FUNGSINYA
-
-  // void straightAhead() {
-  //   if (direction == Direction.right) {
-  //     snakeHead[0] = snakeHead[0] += snakePartSize;
-  //     neckFollowHead(0, false, 1);
-  //     headAlign = Alignment.centerLeft;
-  //     headAxisAlign = Axis.horizontal;
-  //     lastDirection = Direction.right;
-  //   } else if (direction == Direction.left) {
-  //     snakeHead[0] = snakeHead[0] -= snakePartSize;
-  //     neckFollowHead(0, true, 1);
-  //     headAlign = Alignment.centerRight;
-  //     headAxisAlign = Axis.horizontal;
-  //     lastDirection = Direction.left;
-  //   } else if (direction == Direction.down) {
-  //     snakeHead[1] = snakeHead[1] += snakePartSize;
-  //     neckFollowHead(1, false, 0);
-  //     headAlign = Alignment.topCenter;
-  //     headAxisAlign = Axis.vertical;
-  //     lastDirection = Direction.down;
-  //   } else if (direction == Direction.up) {
-  //     snakeHead[1] = snakeHead[1] -= snakePartSize;
-  //     neckFollowHead(1, true, 0);
-  //     headAlign = Alignment.bottomCenter;
-  //     headAxisAlign = Axis.vertical;
-  //     lastDirection = Direction.up;
-  //   }
-  // }
-
-  // void neckFollowHead(int index, bool isNegative, int anotherIndex) {
-  //   var temp = [];
-  //   temp.add(snakeHead[index]);
-  //   temp.add(snakeHead[anotherIndex]);
-  //   if (isNegative) {
-  //     snakeNeck[index] = temp[0] + snakePartSize;
-  //     snakeNeck[anotherIndex] = temp[1];
-  //   } else {
-  //     snakeNeck[index] = temp[0] - snakePartSize;
-  //     snakeNeck[anotherIndex] = temp[1];
-  //   }
-  //   // snakeNeck[index] = temp[0] -= snakePartSize;
-  // }
-
-  // void spreadFood() {
-  //   /// Create random position(left and top)
-  //   /// And make sure it's not collapse with snake's head, body, and tail
-  //   xPart = [];
-  //   yPart = [];
-
-  //   xPart.add(snakeHead[0]);
-  //   yPart.add(snakeHead[1]);
-
-  //   xPart.add(snakeTail.isNotEmpty ? snakeTail[0] : -15);
-  //   yPart.add(snakeTail.isNotEmpty ? snakeTail[1] : -15);
-
-  //   for (var item in snakeBody) {
-  //     xPart.add(item.isNotEmpty ? item[0] : -15);
-  //     yPart.add(item.isNotEmpty ? item[1] : -15);
-  //   }
-  //   print("xPart : $xPart");
-  //   print("yPart : $yPart");
-  //   ///////////
-
-  //   int randomX = Random().nextInt(20);
-  //   int randomY = Random().nextInt(20);
-
-  //   double tempFoodX = randomX * snakePartSize;
-  //   double tempFoodY = randomY * snakePartSize;
-
-  //   if ((!xPart.contains(tempFoodX)) && (!yPart.contains(tempFoodY))) {
-  //     food = [tempFoodX, tempFoodY];
-  //     print("=== Food : $food ===");
-  //   } else {
-  //     createRandomFood(xPart, yPart);
-  //   }
-  // }
-
-  // void createRandomFood(var xPart, var yPart) {
-  //   int randomX = Random().nextInt(20);
-  //   int randomY = Random().nextInt(20);
-
-  //   double tempFoodX = randomX * snakePartSize;
-  //   double tempFoodY = randomY * snakePartSize;
-  //   if ((!xPart.contains(tempFoodX)) && (!yPart.contains(tempFoodY))) {
-  //     food = [tempFoodX, tempFoodY];
-  //     print("============ FOOD : $food ==============");
-  //   } else {
-  //     randomX = Random().nextInt(20);
-  //     randomY = Random().nextInt(20);
-  //     createRandomFood(xPart, yPart);
-  //   }
-  //   print("X : " + randomX.toString() + " " + "Y: " + randomY.toString());
-  // }
-
-  // void addBody() {
-  //   setBodyPosition();
-  //   bodyMember.add(SnakeBody(index: snakeLength));
-  //   snakeLength++;
-  // }
-
-  // Salahnya di setBodyPosition()
-
-  // void setBodyPosition() {
-  //   // Ada 2 patokan buat ngikut depannya,
-  //   //  Ikut neck / index-1
-  //   List<double> tempList = [];
-
-  //   if (snakeLength == 0) {
-  //     /// First Body Appear, follow neck
-  //     if (direction == Direction.right) {
-  //       tempList = [snakeNeck[0] - snakePartSize, snakeNeck[1]];
-  //       snakeBody.add(tempList);
-  //     } else if (direction == Direction.left) {
-  //       tempList = [snakeNeck[0] + snakePartSize, snakeNeck[1]];
-  //       snakeBody.add(tempList);
-  //     } else if (direction == Direction.down) {
-  //       tempList = [snakeNeck[0], snakeNeck[1] + snakePartSize];
-  //       snakeBody.add(tempList);
-  //     } else if (direction == Direction.up) {
-  //       tempList = [snakeNeck[0], snakeNeck[1] - snakePartSize];
-  //       snakeBody.add(tempList);
-  //     }
-
-  //     print("===== HARUSNYA NAMBAH PANJANG ======");
-
-  //     //
-  //   } else {
-  //     /// Second Body and so on Appear, follow index before
-  //     print("===== INI JUGA HARUSNYA NAMBAH PANJANG ======");
-  //   }
-
-  //   bodyMember.add(SnakeBody(index: snakeLength));
-  // }
-
-  void turnRight() {}
-
-  void turnLeft() {}
-
-  void turnUp() {}
-
-  void turnDown() {}
+  void resetLastPlayData() {
+    snakeLength = 0;
+    snakeHead = 0;
+    snakeNeck = 0;
+    snakeBody = [];
+    food = 19;
+    snakeHistory = [];
+    bodyMember = [];
+    axisIndex = 0;
+    direction = Direction.idle;
+    lastDirection = Direction.idle;
+    headAlign = Alignment.center;
+    headAxisAlign = Axis.horizontal;
+    isNegative = false;
+    notifyListeners();
+  }
 }

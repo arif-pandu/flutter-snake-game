@@ -59,27 +59,31 @@ popUpGameOver(BuildContext context) {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            InkWell(
-                              onTap: () {
-                                // Navigator.of(context).popUntil(ModalRoute.withName('/'));
-                                Navigator.pop(context);
-                                Navigator.popAndPushNamed(context, "/");
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 9.5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: AppColor.primaryColor,
-                                ),
-                                child: Text(
-                                  "HOME",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: AppColor.accentColor,
-                                    fontWeight: FontWeight.w500,
+                            Consumer<GameProvider>(
+                              builder: (context, game, child) {
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    Navigator.popAndPushNamed(context, "/");
+                                    game.resetLastPlayData();
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 9.5),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: AppColor.primaryColor,
+                                    ),
+                                    child: Text(
+                                      "HOME",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: AppColor.accentColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             ),
                             Container(
                               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 9.5),
