@@ -21,7 +21,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
   // MAKE NEW ANIMATION
   late final AnimationController animationController = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 500),
+    duration: Duration(milliseconds: context.read<GameProvider>().duration),
     reverseDuration: const Duration(seconds: 0),
   );
 

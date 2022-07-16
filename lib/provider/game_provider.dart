@@ -9,6 +9,7 @@ class GameProvider with ChangeNotifier {
   //
   /// ========== Variable ==============
   double _sensivity = 1.0;
+  int _duration = 300;
   double _screenWidth = 0.0;
   double _screenHeight = 0.0;
   double _boardSize = 0;
@@ -38,6 +39,7 @@ class GameProvider with ChangeNotifier {
 
   /// ============= Getter ============
   double get sensivity => _sensivity;
+  int get duration => _duration;
   List<double> get gyroscopeValue => _gyroscopeValue;
   double get screenWidth => _screenWidth;
   double get screenHeight => _screenHeight;
@@ -61,6 +63,11 @@ class GameProvider with ChangeNotifier {
 
   set sensivity(double value) {
     _sensivity = value;
+    notifyListeners();
+  }
+
+  set duration(int value) {
+    _duration = value;
     notifyListeners();
   }
 

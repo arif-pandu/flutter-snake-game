@@ -34,6 +34,7 @@ popUpChooseMode(BuildContext context) {
                         InkWell(
                           onTap: () {
                             game.sensivity = 0.5;
+                            game.duration = 500;
                             Navigator.of(context).pushReplacementNamed("/play");
                           },
                           child: Container(
@@ -54,6 +55,7 @@ popUpChooseMode(BuildContext context) {
                         InkWell(
                           onTap: () {
                             game.sensivity = 1.0;
+                            game.duration = 300;
                             Navigator.of(context).pushReplacementNamed("/play");
                           },
                           child: Container(
@@ -74,6 +76,7 @@ popUpChooseMode(BuildContext context) {
                         InkWell(
                           onTap: () {
                             game.sensivity = 1.5;
+                            game.duration = 150;
                             Navigator.of(context).pushReplacementNamed("/play");
                           },
                           child: Container(
