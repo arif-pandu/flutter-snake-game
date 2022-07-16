@@ -169,12 +169,7 @@ class GameProvider with ChangeNotifier {
         listCoordinate.add(innerItem);
       }
     }
-
-    var random = [189, 190, 209, 210];
-    int initPoint = random[Random().nextInt(random.length)];
-
-    snakeHead = initPoint;
-    snakeNeck = initPoint;
+    setInitPoint();
 
     notifyListeners();
 
@@ -183,6 +178,14 @@ class GameProvider with ChangeNotifier {
     print("Board : " + _boardSize.toStringAsFixed(2));
     print("Part : " + _snakePartSize.toStringAsFixed(2));
     print("Offset : ${_boardSize / 2}, ${(_boardSize / 2) - _snakePartSize}");
+  }
+
+  void setInitPoint() {
+    var random = [189, 190, 209, 210];
+    int initPoint = random[Random().nextInt(random.length)];
+
+    snakeHead = initPoint;
+    snakeNeck = initPoint;
   }
 
   /// Update Real-Time Gyroscope Value (x, y, z)
@@ -266,7 +269,6 @@ class GameProvider with ChangeNotifier {
     snakeHead = 0;
     snakeNeck = 0;
     snakeBody = [];
-    food = 19;
     snakeHistory = [];
     bodyMember = [];
     axisIndex = 0;
@@ -275,6 +277,7 @@ class GameProvider with ChangeNotifier {
     headAlign = Alignment.center;
     headAxisAlign = Axis.horizontal;
     isNegative = false;
+    setInitPoint();
     notifyListeners();
   }
 }

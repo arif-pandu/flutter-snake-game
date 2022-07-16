@@ -73,7 +73,7 @@ popUpGameOver(BuildContext context) {
                                       borderRadius: BorderRadius.circular(5),
                                       color: AppColor.primaryColor,
                                     ),
-                                    child: Text(
+                                    child: const Text(
                                       "HOME",
                                       style: TextStyle(
                                         fontSize: 18,
@@ -85,20 +85,31 @@ popUpGameOver(BuildContext context) {
                                 );
                               },
                             ),
-                            Container(
-                              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 9.5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: AppColor.primaryColor,
-                              ),
-                              child: Text(
-                                "RESTART",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: AppColor.accentColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                            Consumer<GameProvider>(
+                              builder: (context, game, child) {
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    game.resetLastPlayData();
+                                    Navigator.popAndPushNamed(context, "/play");
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 9.5),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: AppColor.primaryColor,
+                                    ),
+                                    child: Text(
+                                      "RESTART",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: AppColor.accentColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),

@@ -39,6 +39,7 @@ class _GamePlayState extends State<GamePlay> {
   void setFood() {
     var foodProvider = Provider.of<FoodProvider>(context, listen: false);
     foodProvider.spreadFood();
+    print("Food Spreaded");
   }
 
   @override
