@@ -126,16 +126,6 @@ class SnakeProvider with ChangeNotifier {
     bodyFollowNeck();
   }
 
-  // void checkBarrierNeck(Direction direction) {
-  //   if (direction == Direction.up) {
-  //     if (barrierDown.contains(gameProvider.snakeHead)) {
-  //       gameProvider.snakeNeck = gameProvider.snakeHead - 380;
-  //     } else {
-  //       gameProvider.snakeNeck = gameProvider.snakeHead + 20;
-  //     }
-  //   }
-  // }
-
   void bodyFollowNeck() {
     for (var item in gameProvider.bodyMember) {
       gameProvider.snakeBody[item.number] = gameProvider.snakeHistory[item.number + 1];

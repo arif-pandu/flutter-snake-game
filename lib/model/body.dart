@@ -11,7 +11,7 @@ class SnakeBody extends StatelessWidget {
 
   final int index;
 
-  int get number => this.index;
+  int get number => index;
 
   @override
   Widget build(BuildContext context) {

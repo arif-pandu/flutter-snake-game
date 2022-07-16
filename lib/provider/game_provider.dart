@@ -259,11 +259,6 @@ class GameProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /// Ignore this
-  void testConnect() {
-    print(listCoordinate);
-  }
-
   void resetLastPlayData() {
     snakeLength = 0;
     snakeHead = 0;
