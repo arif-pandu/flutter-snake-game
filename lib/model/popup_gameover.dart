@@ -17,7 +17,7 @@ popUpGameOver(BuildContext context) {
           filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
           child: Dialog(
             backgroundColor: Colors.transparent,
-            insetPadding: EdgeInsets.all(10),
+            insetPadding: const EdgeInsets.all(10),
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -25,8 +25,8 @@ popUpGameOver(BuildContext context) {
                   child: Container(
                     height: 250,
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    margin: EdgeInsets.symmetric(horizontal: 30),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    margin: const EdgeInsets.symmetric(horizontal: 30),
                     decoration: BoxDecoration(
                       color: AppColor.accentColor,
                       borderRadius: BorderRadius.circular(10),
@@ -50,7 +50,7 @@ popUpGameOver(BuildContext context) {
                               builder: (context, game, child) {
                                 return Text(
                                   "Score : " + game.snakeLength.toString(),
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.primaryColor),
+                                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: AppColor.primaryColor),
                                 );
                               },
                             ),
@@ -68,7 +68,7 @@ popUpGameOver(BuildContext context) {
                                     game.resetLastPlayData();
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 9.5),
+                                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 9.5),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: AppColor.primaryColor,
@@ -94,12 +94,12 @@ popUpGameOver(BuildContext context) {
                                     Navigator.popAndPushNamed(context, "/play");
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 9.5),
+                                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 9.5),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: AppColor.primaryColor,
                                     ),
-                                    child: Text(
+                                    child: const Text(
                                       "RESTART",
                                       style: TextStyle(
                                         fontSize: 18,

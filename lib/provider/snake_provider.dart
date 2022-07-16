@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/enum.dart';
 import 'package:flutter_snake_game/model/body.dart';

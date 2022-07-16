@@ -1,4 +1,5 @@
-import 'dart:async';
+// ignore_for_file: avoid_print
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/enum.dart';
@@ -19,7 +20,7 @@ class GameProvider with ChangeNotifier {
 
   List<double> _gyroscopeValue = [0, 0, 0];
 
-  int _food = 19;
+  int food = 19;
 
   int _snakeHead = 0;
   int _snakeNeck = 0;
@@ -45,8 +46,6 @@ class GameProvider with ChangeNotifier {
   double get snakePartSize => _snakePartSize;
   List<List<Point>> get listCoordinateRaw => _listCoordinateRaw;
   List<Point> get listCoordinate => _listCoordinate;
-
-  int get food => _food;
 
   List<int> get snakeHistory => _snakeHistory;
 
@@ -94,11 +93,6 @@ class GameProvider with ChangeNotifier {
   set listCoordinate(List<Point> value) {
     _listCoordinate = value;
     notifyListeners();
-  }
-
-  set food(int value) {
-    _food = value;
-    // notifyListeners();
   }
 
   set snakeHistory(List<int> value) {

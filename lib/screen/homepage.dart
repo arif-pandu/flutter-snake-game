@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(7),
                   color: AppColor.accentColor,
                 ),
-                padding: EdgeInsets.symmetric(vertical: 7.5, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 20),
                 child: const Text(
                   "PLAY",
                   style: TextStyle(

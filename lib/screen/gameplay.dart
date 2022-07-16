@@ -1,8 +1,8 @@
-import 'dart:async';
+// ignore_for_file: avoid_print
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/color.dart';
-import 'package:flutter_snake_game/helper/enum.dart';
 import 'package:flutter_snake_game/model/food.dart';
 import 'package:flutter_snake_game/model/head.dart';
 import 'package:flutter_snake_game/model/neck.dart';
@@ -70,9 +70,9 @@ class _GamePlayState extends State<GamePlay> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Spacer(),
+              const Spacer(),
               Container(
-                margin: EdgeInsets.only(top: 30),
+                margin: const EdgeInsets.only(top: 30),
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -85,7 +85,7 @@ class _GamePlayState extends State<GamePlay> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Consumer<GameProvider>(
                       builder: (context, game, child) {
                         return Text(
@@ -121,7 +121,7 @@ class _GamePlayState extends State<GamePlay> {
                   );
                 },
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 children: [
                   Padding(

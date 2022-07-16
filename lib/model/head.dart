@@ -1,6 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/color.dart';
-import 'package:flutter_snake_game/helper/enum.dart';
 import 'package:flutter_snake_game/model/popup_gameover.dart';
 import 'package:flutter_snake_game/provider/food_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
@@ -21,7 +22,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
   late final AnimationController animationController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 500),
-    reverseDuration: Duration(seconds: 0),
+    reverseDuration: const Duration(seconds: 0),
   );
 
   late final Animation<double> animation = CurvedAnimation(
