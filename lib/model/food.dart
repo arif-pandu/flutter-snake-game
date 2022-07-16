@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_snake_game/helper/color.dart';
 import 'package:flutter_snake_game/provider/food_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class _FoodState extends State<Food> {
                 width: game.snakePartSize * 0.8,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.red[700],
+                  color: AppColor.foodColor,
                 ),
               ),
             ),

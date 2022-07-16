@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_snake_game/helper/color.dart';
 import 'package:flutter_snake_game/helper/enum.dart';
 import 'package:flutter_snake_game/model/food.dart';
 import 'package:flutter_snake_game/model/head.dart';
@@ -56,10 +57,29 @@ class _GamePlayState extends State<GamePlay> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text("SNAKE GAME"),
-                  Text("POIN : 123"),
+                  const Text(
+                    "SCORE :",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: AppColor.accentColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Consumer<GameProvider>(
+                    builder: (context, game, child) {
+                      return Text(
+                        game.snakeLength.toString(),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: AppColor.accentColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -69,7 +89,7 @@ class _GamePlayState extends State<GamePlay> {
                   width: boardSize,
                   height: boardSize,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.black),
+                    border: Border.all(width: 1, color: AppColor.accentColor),
                   ),
                   child: Stack(
                     children: [
@@ -89,26 +109,6 @@ class _GamePlayState extends State<GamePlay> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text("X : " + game.gyroscopeValue[0].toStringAsFixed(2)),
-                        Text("Y : " + game.gyroscopeValue[1].toStringAsFixed(2)),
-                        Text("Z : " + game.gyroscopeValue[2].toStringAsFixed(2)),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      "Axis Rotation : " +
-                          (game.isNegative ? "-" : "") +
-                          (game.axisIndex == 0
-                              ? "X"
-                              : game.axisIndex == 1
-                                  ? "Y"
-                                  : "Z"),
-                    ),
-                    const SizedBox(height: 20),
-                    Text("DIRECTION : " + (game.direction.name)),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

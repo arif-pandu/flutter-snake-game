@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_snake_game/helper/color.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ class SnakeBody extends StatelessWidget {
           child: Container(
             height: game.snakePartSize,
             width: game.snakePartSize,
-            color: Colors.green,
+            color: AppColor.snakeColor,
           ),
         );
       },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_snake_game/helper/color.dart';
 import 'package:flutter_snake_game/helper/enum.dart';
 import 'package:flutter_snake_game/provider/food_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
@@ -106,7 +107,7 @@ class _SnakeHeadState extends State<SnakeHead> with TickerProviderStateMixin {
                 axis: game.headAxisAlign,
                 axisAlignment: (game.headAlign == Alignment.centerRight) || (game.headAlign == Alignment.bottomCenter) ? -1 : 1,
                 child: Container(
-                  color: Colors.green,
+                  color: AppColor.snakeColor,
                   height: game.snakePartSize,
                   width: game.snakePartSize,
                 ),

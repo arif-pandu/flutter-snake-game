@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_snake_game/helper/color.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,7 @@ class SnakeNeck extends StatelessWidget {
           child: Container(
             height: game.snakePartSize,
             width: game.snakePartSize,
-            color: Colors.green,
+            color: AppColor.snakeColor,
             // decoration: BoxDecoration(
             //   color: (game.listCoordinate[game.snakeNeck]) == (game.listCoordinate[game.snakeHead]) //
             //       ? Colors.transparent

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_snake_game/helper/color.dart';
 import 'package:flutter_snake_game/provider/food_provider.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:flutter_snake_game/provider/snake_provider.dart';
@@ -29,6 +30,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: "Poppins",
+          scaffoldBackgroundColor: AppColor.primaryColor,
+        ),
         routes: {
           "/": (context) => const HomePage(),
           "/play": (context) => const GamePlay(),
