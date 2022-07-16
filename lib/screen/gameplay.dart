@@ -123,11 +123,12 @@ class _GamePlayState extends State<GamePlay> {
               ),
               const Spacer(),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "credit By : arif-pandu",
+                      "source : github.com/arif-pandu",
                       style: TextStyle(
                         fontSize: 10,
                         color: AppColor.accentColor.withOpacity(0.2),

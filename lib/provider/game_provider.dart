@@ -8,6 +8,7 @@ import 'package:flutter_snake_game/model/body.dart';
 class GameProvider with ChangeNotifier {
   //
   /// ========== Variable ==============
+  double _sensivity = 1.0;
   double _screenWidth = 0.0;
   double _screenHeight = 0.0;
   double _boardSize = 0;
@@ -28,9 +29,6 @@ class GameProvider with ChangeNotifier {
 
   List<SnakeBody> _bodyMember = [];
 
-  // List<double> xPart = [];
-  // List<double> yPart = [];
-
   int axisIndex = 0;
   bool isNegative = false;
   Direction direction = Direction.idle;
@@ -39,6 +37,7 @@ class GameProvider with ChangeNotifier {
   Axis _headAxisAlign = Axis.horizontal;
 
   /// ============= Getter ============
+  double get sensivity => _sensivity;
   List<double> get gyroscopeValue => _gyroscopeValue;
   double get screenWidth => _screenWidth;
   double get screenHeight => _screenHeight;
@@ -59,6 +58,11 @@ class GameProvider with ChangeNotifier {
   Axis get headAxisAlign => _headAxisAlign;
 
   /// ========== Setter =============
+
+  set sensivity(double value) {
+    _sensivity = value;
+    notifyListeners();
+  }
 
   set screenWidth(double value) {
     _screenWidth = value;
@@ -202,7 +206,7 @@ class GameProvider with ChangeNotifier {
       }
       double largest = tempList.reduce(max);
 
-      if (largest >= 1.5) {
+      if (largest >= sensivity) {
         return tempList.indexWhere((element) => element == largest);
       } else {
         return axisIndex;

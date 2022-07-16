@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_game/helper/color.dart';
+import 'package:flutter_snake_game/model/popup_gamemode.dart';
 import 'package:flutter_snake_game/provider/game_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,7 @@ class HomePage extends StatelessWidget {
             InkWell(
               onTap: () {
                 context.read<GameProvider>().setDevSize(height, width);
-                Navigator.of(context).pushReplacementNamed("/play");
+                popUpChooseMode(context);
               },
               child: Container(
                 decoration: BoxDecoration(
